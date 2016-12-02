@@ -32,7 +32,9 @@ public abstract class Entity {
 	
 	public abstract void die();
 	
-	public abstract void itemDropPoint(float x, float y, int width, int height);
+	public abstract float itemDropX(float x,int width);
+	
+	public abstract float itemDropY(float y,int height);
 	
 	public void hurt(int amt) {
 		health -= amt;

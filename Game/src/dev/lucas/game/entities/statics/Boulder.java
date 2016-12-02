@@ -1,6 +1,7 @@
 package dev.lucas.game.entities.statics;
 
 import java.awt.Graphics;
+import java.util.Random;
 
 import dev.lucas.game.Handler;
 import dev.lucas.game.gfx.Assets;
@@ -29,14 +30,24 @@ public class Boulder extends StaticEntity {
 
 	@Override
 	public void die() {
-		handler.getWorld().getItem_manager().addItem(Item.rock_item.createNew((int) x, (int) y));
+		handler.getWorld().getItem_manager().addItem(Item.rock_item.createNew(
+				(int) itemDropX(x, Tile.TILEWIDTH),
+				(int) itemDropY(y, Tile.TILEHEIGHT)));
+	}
+
+	@Override
+	public float itemDropX(float x, int width) {
+		Random rand = new Random();
+		int x_offset = rand.nextInt(width);
+		return x + x_offset;
 		
 	}
 
 	@Override
-	public void itemDropPoint(float x, float y, int width, int height) {
-		
-		
+	public float itemDropY(float y, int height) {
+		Random rand = new Random();
+		int y_offset = rand.nextInt(height);
+		return y + y_offset;
 	}
 
 }

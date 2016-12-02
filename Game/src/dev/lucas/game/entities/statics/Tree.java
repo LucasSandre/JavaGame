@@ -1,6 +1,7 @@
 package dev.lucas.game.entities.statics;
 
 import java.awt.Graphics;
+import java.util.Random;
 
 import dev.lucas.game.Handler;
 import dev.lucas.game.gfx.Assets;
@@ -31,14 +32,28 @@ public class Tree extends StaticEntity{
 
 	@Override
 	public void die() {
-		handler.getWorld().getItem_manager().addItem(Item.wood_item.createNew((int)x, (int) y));
-		handler.getWorld().getItem_manager().addItem(Item.tree_item.createNew((int)(x+64),(int)(y+64) ));
+		handler.getWorld().getItem_manager().addItem(Item.wood_item.createNew(
+				(int) itemDropX(x, Tile.TILEWIDTH*2),
+				(int) itemDropY(y, Tile.TILEHEIGHT*2)));
+		
+		handler.getWorld().getItem_manager().addItem(Item.tree_item.createNew(
+				(int) itemDropX(x, Tile.TILEWIDTH*2) ,
+				(int) itemDropY(y, Tile.TILEHEIGHT*2) ));
 	}
 
 	@Override
-	public void itemDropPoint(float x, float y, int width, int height) {
+	public float itemDropX(float x, int width) {
+		Random rand = new Random();
+		int x_offset = rand.nextInt(width);
+		return x + x_offset;
 		
-		
+	}
+
+	@Override
+	public float itemDropY(float y, int height) {
+		Random rand = new Random();
+		int y_offset = rand.nextInt(height);
+		return y + y_offset;
 	}
 
 }

@@ -1,6 +1,9 @@
 package dev.lucas.game.worlds;
 
 import java.awt.Graphics;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import dev.lucas.game.Handler;
 import dev.lucas.game.entities.EntityManager;
@@ -37,9 +40,9 @@ public class World {
 		entity_manager.addEntity(new Boulder(handler, 500, 550));
 		
 		loadWorld(path);
-		
+		System.out.println(spawn_x + "    " + spawn_y);
 		entity_manager.getPlayer().setX(spawn_x);
-		entity_manager.getPlayer().setX(spawn_y);
+		entity_manager.getPlayer().setY(spawn_y);
 	}
 	
 	public void tick() {
@@ -82,6 +85,21 @@ public class World {
 		return t;
 	}
 	
+
+	private void generateWorld(String path) {
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+			int width = 3012,height = 3012;
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.err.println("World could not be generated");
+			System.exit(1);
+		}
+		
+		
+	}
 	private void loadWorld(String path){
 		String file = Utils.loadFileAsString(path);
 		String[] tokens = file.split("\\s+");

@@ -4,7 +4,7 @@ package dev.lucas.game.entities.creatures;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
+import java.util.Random;
 
 import dev.lucas.game.Handler;
 import dev.lucas.game.entities.Entity;
@@ -190,6 +190,29 @@ public class Player extends Creature {
 			xMove = speed;
 	}
 	
+	@Override
+	public float itemDropX(float x, int width) {
+		Random rand = new Random();
+		int x_offset = rand.nextInt(width);
+		return x + x_offset;
+		
+	}
+
+	@Override
+	public float itemDropY(float y, int height) {
+		Random rand = new Random();
+		int y_offset = rand.nextInt(height);
+		return y + y_offset;
+	}
+	
+	@Override
+	public void die() {
+		
+		
+	}
+	
+	// Getters and Setters
+	
 	public Inventory getInventory() {
 		return inventory;
 	}
@@ -232,14 +255,4 @@ public class Player extends Creature {
 		
 	}
 
-	@Override
-	public void die() {
-		
-		
-	}
-
-	@Override
-	public void itemDropPoint(float x, float y, int width, int height) {
-		
-	}
 }
