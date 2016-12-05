@@ -24,7 +24,11 @@ public class Assets {
 		
 		// Get Sheet files
 		
-		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/map.png"));
+		SpriteSheet entity_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/EntitySheet.png"));
+		SpriteSheet static_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/StaticSheet.png"));
+		SpriteSheet tile_sheet   = new SpriteSheet(ImageLoader.loadImage("/textures/TileSheet.png"));
+		SpriteSheet ui_sheet     = new SpriteSheet(ImageLoader.loadImage("/textures/UISheet.png"));
+		SpriteSheet item_sheet   = new SpriteSheet(ImageLoader.loadImage("/textures/ItemSheet.png"));
 		SpriteSheet attack_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/Attackmap.png"));
 		
 		// Get Fonts
@@ -51,7 +55,6 @@ public class Assets {
 		
 		
 		
-		// Animated Sprites
 		player_down = new BufferedImage[2];
 		player_up = new BufferedImage[2];
 		player_right = new BufferedImage[2];
@@ -69,81 +72,38 @@ public class Assets {
 		zombie_right = new BufferedImage[3];
 		zombie_up = new BufferedImage[3];
 		
-		player_down[0]  = sheet.crop(0, 0, width, height);
-		player_down[1]  = sheet.crop(width, 0, width, height);
-		player_up[0]    = sheet.crop(width*2, 0, width, height);
-		player_up[1]    = sheet.crop(width*3, 0, width, height);
-		player_right[0] = sheet.crop(width*4, 0, width, height);
-		player_right[1] = sheet.crop(width*5, 0, width, height);
-		player_left[0]  = sheet.crop(width*6, 0, width, height);
-		player_left[1]  = sheet.crop(width*7, 0, width, height);
+		// For loops for animations
 		
-		start[0]        = sheet.crop(0,height*7,width*2,height);  
-		start[1]        = sheet.crop(width*2,height*7,width*2,height);
+		for(int i = 0; i < 2; i++) {
+			player_down[i] = entity_sheet.crop(width*i, 0, width, height);
+			player_up[i]   = entity_sheet.crop(width*i, height, width, height);
+			player_left[i] = entity_sheet.crop(width*i, height*2, width, height);
+			player_right[i]= entity_sheet.crop(width*i, height*3, width, height);
+		}
 		
-		attack_up[0]    = attack_sheet.crop(width*7, 0, width, height);
-		attack_up[1]    = attack_sheet.crop(width*6, 0, width, height);
-		attack_up[2]    = attack_sheet.crop(width*5, 0, width, height);
-		attack_up[3]    = attack_sheet.crop(width*4, 0, width, height);
-		attack_up[4]    = attack_sheet.crop(width*3, 0, width, height);
-		attack_up[5]    = attack_sheet.crop(width*2, 0, width, height);
-		attack_up[6]    = attack_sheet.crop(width, 0, width, height);
-		attack_up[7]    = attack_sheet.crop(0, 0, width, height);
+		for (int i = 7,index = 0; i > -1; i--) {
+			attack_up[index] = attack_sheet.crop(width*i, 0, width, height);
+			attack_down[index]  = attack_sheet.crop(width*i, height, width, height);
+			attack_right[index] = attack_sheet.crop(width*i, height*2, width, height);
+			attack_left[index] = attack_sheet.crop(width*i, height*3, width, height);
+			index++;
+		}
 		
-		attack_down[0]  = attack_sheet.crop(width*7, height, width, height);
-		attack_down[1]  = attack_sheet.crop(width*6, height, width, height);
-		attack_down[2]  = attack_sheet.crop(width*5, height, width, height);
-		attack_down[3]  = attack_sheet.crop(width*4, height, width, height);
-		attack_down[4]  = attack_sheet.crop(width*3, height, width, height);
-		attack_down[5]  = attack_sheet.crop(width*2, height, width, height);
-		attack_down[6]  = attack_sheet.crop(width, height, width, height);
-		attack_down[7]  = attack_sheet.crop(0, height, width, height);
 		
-		attack_right[0] = attack_sheet.crop(width*7, height*2, width, height);
-		attack_right[1] = attack_sheet.crop(width*6, height*2, width, height);
-		attack_right[2] = attack_sheet.crop(width*5, height*2, width, height);
-		attack_right[3] = attack_sheet.crop(width*4, height*2, width, height);
-		attack_right[4] = attack_sheet.crop(width*3, height*2, width, height);
-		attack_right[5] = attack_sheet.crop(width*2, height*2, width, height);
-		attack_right[6] = attack_sheet.crop(width, height*2, width, height);
-		attack_right[7] = attack_sheet.crop(0, height*2, width, height);
-
-		attack_left[0] = attack_sheet.crop(width*7, height*3, width, height);
-		attack_left[1] = attack_sheet.crop(width*6, height*3, width, height);
-		attack_left[2] = attack_sheet.crop(width*5, height*3, width, height);
-		attack_left[3] = attack_sheet.crop(width*4, height*3, width, height);
-		attack_left[4] = attack_sheet.crop(width*3, height*3, width, height);
-		attack_left[5] = attack_sheet.crop(width*2, height*3, width, height);
-		attack_left[6] = attack_sheet.crop(width, height*3, width, height);
-		attack_left[7] = attack_sheet.crop(0, height*3, width, height);
-
-		zombie_down[0] = sheet.crop(width*5, height, width, height);
-		zombie_down[1] = sheet.crop(width*6, height, width, height);
-		zombie_down[2] = sheet.crop(width*7, height, width, height);
-		
-		zombie_left[0] = sheet.crop(width*5, height*2, width, height);
-		zombie_left[1] = sheet.crop(width*6, height*2, width, height);
-		zombie_left[2] = sheet.crop(width*7, height*2, width, height);
-		
-		zombie_right[0] = sheet.crop(width*5, height*3, width, height);
-		zombie_right[1] = sheet.crop(width*6, height*3, width, height);
-		zombie_right[2] = sheet.crop(width*7, height*3, width, height);
-		
-		zombie_up[0] = sheet.crop(width*5, height*4, width, height);
-		zombie_up[1] = sheet.crop(width*6, height*4, width, height);
-		zombie_up[2] = sheet.crop(width*7, height*4, width, height);
+		start[0]        = ui_sheet.crop(0,0,width*2,height);  
+		start[1]        = ui_sheet.crop(width*2,0,width*2,height);
 		
 		// Still Sprites 
-		stone        = sheet.crop(0, height, width, height);
-		grass        = sheet.crop(width, height, width, height);
-		tree         = sheet.crop(width*2, height, width, height);
-		dirt         = sheet.crop(width*3, height, width, height);
-		player_still = sheet.crop(width*4, height, width, height); 
-		boulder      = sheet.crop(width*2, height*2, width, height);
-		wood         = sheet.crop(width*4, height*7, width, height);
+		stone        = tile_sheet.crop(0, 0, width, height);
+		grass        = tile_sheet.crop(width, 0, width, height);
+		dirt         = tile_sheet.crop(width*2, 0, width, height);
+		tree         = static_sheet.crop(0, 0, width, height);
+		player_still = entity_sheet.crop(width*2, 0, width, height); 
+		boulder      = static_sheet.crop(0, height, width, height);
+		wood         = item_sheet.crop(0, 0, width, height);
 
 		
 		// missing texture
-		missing = sheet.crop(width*4, height*4, width, height);
+		//missing = sheet.crop(width*4, height*4, width, height);
 	}
 }

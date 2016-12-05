@@ -89,7 +89,7 @@ public class World {
 	private void generateWorld(String path) {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
-			int width = 3012,height = 3012;
+			int width = 3006,height = 3012;
 			
 			
 		} catch (IOException e) {
