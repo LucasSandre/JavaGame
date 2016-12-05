@@ -52,9 +52,6 @@ public class Assets {
 		font_30_fm = FontLoader.loadFontMetrics(g, font_30);
 		font_32_fm = FontLoader.loadFontMetrics(g, font_32);
 		
-		
-		
-		
 		player_down = new BufferedImage[2];
 		player_up = new BufferedImage[2];
 		player_right = new BufferedImage[2];
@@ -95,8 +92,8 @@ public class Assets {
 		
 		// Still Sprites 
 		stone        = tile_sheet.crop(0, 0, width, height);
-		grass        = tile_sheet.crop(width, 0, width, height);
-		dirt         = tile_sheet.crop(width*2, 0, width, height);
+		grass        = tile_sheet.crop(width*2, 0, width, height);
+		dirt         = tile_sheet.crop(width, 0, width, height);
 		tree         = static_sheet.crop(0, 0, width, height);
 		player_still = entity_sheet.crop(width*2, 0, width, height); 
 		boulder      = static_sheet.crop(0, height, width, height);
