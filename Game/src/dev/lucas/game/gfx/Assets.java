@@ -9,7 +9,16 @@ public class Assets {
 	private static final int width = 32, height = 32;
 
 	
-	public static BufferedImage player_still, stone, grass, tree, boulder, dirt, wood, missing;
+	public static BufferedImage player_still, stone, grass, tree, boulder, dirt, wood, gravel, 
+	                            grass_noob, grass_easy, grass_med, grass_diff, grass_hard,
+	                            brick_crack_1, brick_crack_2, brick_crack_3, brick_grate,
+	                            brick_clean, brick_batt_side, brick_bottom_right, brick_bottom_left, 
+								brick_top_right1, brick_top_right2, brick_top_right3, brick_top_right4,
+	                            brick_top_right5, brick_top_right6, brick_top_left1, brick_top_left2, 
+	                            brick_top_left3, brick_top_left4, brick_top_left5, brick_top_left6,
+	                            brick_batt_up1, brick_batt_up2, brick_batt_up3, brick_batt_up4,
+	                            brick_batt_up5, brick_batt_up6;
+	
 	public static BufferedImage[] player_down, player_up, player_right, player_left;
 	public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
 	public static BufferedImage[] start;
@@ -90,13 +99,54 @@ public class Assets {
 		start[0]        = ui_sheet.crop(0,0,width*2,height);  
 		start[1]        = ui_sheet.crop(width*2,0,width*2,height);
 		
-		// Still Sprites 
+		// Tiles 
 		stone        = tile_sheet.crop(0, 0, width, height);
-		grass        = tile_sheet.crop(width*2, 0, width, height);
 		dirt         = tile_sheet.crop(width, 0, width, height);
+		grass        = tile_sheet.crop(width*2, 0, width, height);
+		grass_noob 	 = tile_sheet.crop(width*3, 0, width, height); 
+		grass_easy   = tile_sheet.crop(width*4, 0, width, height);
+		grass_med    = tile_sheet.crop(width*5, 0, width, height);
+		grass_diff   = tile_sheet.crop(width*6, 0, width, height);
+		grass_hard   = tile_sheet.crop(width*7, 0, width, height);
+		gravel       = tile_sheet.crop(width*8, 0, width, height);
+		
+		brick_crack_1= tile_sheet.crop(0, height, width, height);
+		brick_crack_2= tile_sheet.crop(width, height, width, height);
+		brick_grate  = tile_sheet.crop(0, height*2, width, height);
+		brick_crack_3= tile_sheet.crop(width, height*2, width, height);
+		brick_clean  = tile_sheet.crop(0, height*3, width, height);
+		
+		brick_batt_side = tile_sheet.crop(width, height*3, width, height);
+		brick_bottom_right = tile_sheet.crop(0, height*4, width, height);
+		brick_bottom_left = tile_sheet.crop(width, height*4, width, height);
+		
+		brick_top_right1 = tile_sheet.crop(width*2, height, width, height);
+		brick_top_right2 = tile_sheet.crop(width*3, height, width, height);
+		brick_top_right3 = tile_sheet.crop(width*4, height, width, height);
+		brick_top_right4 = tile_sheet.crop(width*5, height, width, height);
+		brick_top_right5 = tile_sheet.crop(width*6, height, width, height);
+		brick_top_right6 = tile_sheet.crop(width*7, height, width, height);
+		
+		brick_top_left1 = tile_sheet.crop(width*2, height*2, width, height);
+		brick_top_left2 = tile_sheet.crop(width*3, height*2, width, height);
+		brick_top_left3 = tile_sheet.crop(width*4, height*2, width, height);
+		brick_top_left4 = tile_sheet.crop(width*5, height*2, width, height);
+		brick_top_left5 = tile_sheet.crop(width*6, height*2, width, height);
+		brick_top_left6 = tile_sheet.crop(width*7, height*2, width, height);
+		
+		brick_batt_up1 = tile_sheet.crop(width*2, height*3, width, height);
+		brick_batt_up2 = tile_sheet.crop(width*3, height*3, width, height);
+		brick_batt_up3 = tile_sheet.crop(width*4, height*3, width, height);
+		brick_batt_up4 = tile_sheet.crop(width*5, height*3, width, height);
+		brick_batt_up5 = tile_sheet.crop(width*6, height*3, width, height);
+		brick_batt_up6 = tile_sheet.crop(width*7, height*3, width, height);
+		
+		// Static Sprites
 		tree         = static_sheet.crop(0, 0, width, height);
-		player_still = entity_sheet.crop(width*2, 0, width, height); 
 		boulder      = static_sheet.crop(0, height, width, height);
+		
+		player_still = entity_sheet.crop(width*2, 0, width, height); 
+		
 		wood         = item_sheet.crop(0, 0, width, height);
 
 		

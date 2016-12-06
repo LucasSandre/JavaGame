@@ -38,9 +38,8 @@ public class World {
 		entity_manager.addEntity(new Boulder(handler, 100, 550));
 		entity_manager.addEntity(new Tree(handler, 500, 250));
 		entity_manager.addEntity(new Boulder(handler, 500, 550));
-		
+		generateWorld("res/World/world.txt");
 		loadWorld(path);
-		System.out.println(spawn_x + "    " + spawn_y);
 		entity_manager.getPlayer().setX(spawn_x);
 		entity_manager.getPlayer().setY(spawn_y);
 	}
@@ -90,8 +89,28 @@ public class World {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
 			int width = 3006,height = 3012;
-			
-			
+			bw.write(width + " " + height + '\n');
+			bw.write("1503 1506\n" );
+			for (int y = 1; y < height+1; y++) {
+				for (int x = 1; x < width+1; x++) {
+					if (y >= 1 &&y <= 1000) {
+						bw.write("5 ");
+						continue;
+					}
+					if (y > 1000 && ((x >=1 && x<=1000)||(x > 2000 && x <= width))) {
+						bw.write("5 ");
+						continue;
+					}
+					if (y > 2000 && y <= height){
+						bw.write("5 ");
+						continue;
+					}
+					bw.write("0 ");
+				}
+				if (y != height-1)
+					bw.write('\n');
+			}
+			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("World could not be generated");
@@ -110,6 +129,8 @@ public class World {
 		spawn_x = Utils.parseInt(tokens[2]);
 		spawn_y = Utils.parseInt(tokens[3]);
 		
+		spawn_x *= Tile.TILEWIDTH;
+		spawn_y *= Tile.TILEHEIGHT;
 		tiles = new int[width][height];
 		for (int y = 0;y < height; y++) {
 			for (int x = 0;x < width; x++) {
