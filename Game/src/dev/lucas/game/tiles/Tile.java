@@ -50,6 +50,7 @@ public class Tile {
 	
 	public static Tile dirt_tile = new DirtTile(100);
 	public static Tile rock_tile = new RockTile(101);
+	public static Tile edge_tile = new EdgeTile(255);
 	
 	
 	// Class

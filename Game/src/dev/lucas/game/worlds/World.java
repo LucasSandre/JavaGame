@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 import dev.lucas.game.Handler;
 import dev.lucas.game.entities.EntityManager;
@@ -47,6 +48,8 @@ public class World {
 	public void tick() {
 		item_manager.tick();
 		entity_manager.tick();
+		System.out.println(handler.getWorld().getEntity_manager().getPlayer().getX()/ Tile.TILEWIDTH + "  " +
+		handler.getWorld().getEntity_manager().getPlayer().getY()/ Tile.TILEHEIGHT);
 	}
 	
 	public void render(Graphics g) {
@@ -86,22 +89,66 @@ public class World {
 	
 
 	private void generateWorld(String path) {
+		Random rand = new Random();
+		String brick;
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
-			int width = 3006,height = 3012;
+			int width = 3012,height = 3022;
 			bw.write(width + " " + height + '\n');
-			bw.write("1503 1506\n" );
-			for (int y = 1; y < height+1; y++) {
-				for (int x = 1; x < width+1; x++) {
-					if (y >= 1 &&y <= 1000) {
+			bw.write("1506 1511\n" );
+			for (int y = 1; y <= height; y++) {
+				for (int x = 1; x <= width; x++) {
+					if (y==1||x==1||y==height||x==width){
+						bw.write("255 ");
+						continue;
+					}
+					if (y >= 2 && y <= 1002) {
 						bw.write("5 ");
 						continue;
 					}
-					if (y > 1000 && ((x >=1 && x<=1000)||(x > 2000 && x <= width))) {
+					if (y == 1003 && (x == 1003)) {
+						bw.write("13 ");
+						continue;
+					}
+					if (y == 1003 && x > 1003 && x < 2010){
+						bw.write("6 ");
+						continue;
+					}	
+					if (y == 1003 && x == 2010) {
+						bw.write("19 ");
+						continue;
+					}
+					if (y == 1004 && (x > 1003 && x < 2010)) {
+						brick = Integer.toString(rand.nextInt(5)+27);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y > 1003 && y < 2019 && ((x == 1003 || x == 2010))) {
+						bw.write("12 ");
+						continue;
+					}
+					if (y == 2019 && x == 1003) {
+						bw.write("25 ");
+						continue;
+					}
+					if (y == 2019 && x == 2010) {
+						bw.write("26 ");
+						continue;
+					}
+					if (y == 2019 && (x > 1003 && x < 2010)) {
+						bw.write("7 ");
+						continue;
+					}
+					if (y == 2020 && (x >= 1003 && x <=2010)) {
+						brick = Integer.toString(rand.nextInt(5)+27);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y > 1002 && ((x >=2 && x<=1002)||(x >= 2011 && x <= width-1))) {
 						bw.write("5 ");
 						continue;
 					}
-					if (y > 2000 && y <= height){
+					if (y > 2020 && y <= height-1){
 						bw.write("5 ");
 						continue;
 					}

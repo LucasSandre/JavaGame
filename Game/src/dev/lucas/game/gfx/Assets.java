@@ -17,7 +17,7 @@ public class Assets {
 	                            brick_top_right5, brick_top_right6, brick_top_left1, brick_top_left2, 
 	                            brick_top_left3, brick_top_left4, brick_top_left5, brick_top_left6,
 	                            brick_batt_up1, brick_batt_up2, brick_batt_up3, brick_batt_up4,
-	                            brick_batt_up5, brick_batt_up6;
+	                            brick_batt_up5, brick_batt_up6, edge;
 	
 	public static BufferedImage[] player_down, player_up, player_right, player_left;
 	public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
@@ -148,7 +148,9 @@ public class Assets {
 		player_still = entity_sheet.crop(width*2, 0, width, height); 
 		
 		wood         = item_sheet.crop(0, 0, width, height);
-
+		
+		// World edge
+		edge = tile_sheet.crop(width*8, height, width, height);
 		
 		// missing texture
 		//missing = sheet.crop(width*4, height*4, width, height);
