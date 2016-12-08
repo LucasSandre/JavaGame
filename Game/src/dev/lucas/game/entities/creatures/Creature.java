@@ -7,7 +7,7 @@ import dev.lucas.game.tiles.Tile;
 public abstract class Creature extends Entity {
 
 	
-	public static final float DEFAULT_SPEED = 50.0f;
+	public static final float DEFAULT_SPEED = 150.0f;
 	public static final int DEFAULT_CREATURE_WIDTH = 64,
 							DEFAULT_CREATURE_HEIGHT = 64;
 	

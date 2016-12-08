@@ -17,7 +17,9 @@ public class Assets {
 	                            brick_top_right5, brick_top_right6, brick_top_left1, brick_top_left2, 
 	                            brick_top_left3, brick_top_left4, brick_top_left5, brick_top_left6,
 	                            brick_batt_up1, brick_batt_up2, brick_batt_up3, brick_batt_up4,
-	                            brick_batt_up5, brick_batt_up6, edge;
+	                            brick_batt_up5, brick_batt_up6, grass_fade1, grass_fade2, grass_fade3, grass_fade4, 
+	                            grass_fade5, grass_rfade1, grass_rfade2, grass_rfade3, grass_rfade4, 
+	                            grass_rfade5, edge;
 	
 	public static BufferedImage[] player_down, player_up, player_right, player_left;
 	public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
@@ -103,12 +105,22 @@ public class Assets {
 		stone        = tile_sheet.crop(0, 0, width, height);
 		dirt         = tile_sheet.crop(width, 0, width, height);
 		grass        = tile_sheet.crop(width*2, 0, width, height);
-		grass_noob 	 = tile_sheet.crop(width*3, 0, width, height); 
+		grass_fade1  = tile_sheet.crop(width*8, 0, width, height);
+		grass_noob 	 = tile_sheet.crop(width*3, 0, width, height);
+		grass_fade2  = tile_sheet.crop(width*9, 0, width, height);
 		grass_easy   = tile_sheet.crop(width*4, 0, width, height);
+		grass_fade3  = tile_sheet.crop(width*10, 0, width, height);
 		grass_med    = tile_sheet.crop(width*5, 0, width, height);
+		grass_fade4  = tile_sheet.crop(width*11, 0, width, height);
 		grass_diff   = tile_sheet.crop(width*6, 0, width, height);
+		grass_fade5  = tile_sheet.crop(width*12, 0, width, height);
 		grass_hard   = tile_sheet.crop(width*7, 0, width, height);
-		gravel       = tile_sheet.crop(width*8, 0, width, height);
+		grass_rfade1= tile_sheet.crop(width*8, height, width, height);
+		grass_rfade2= tile_sheet.crop(width*9, height, width, height);
+		grass_rfade3= tile_sheet.crop(width*10, height, width, height);
+		grass_rfade4= tile_sheet.crop(width*11, height, width, height);
+		grass_rfade5= tile_sheet.crop(width*12, height, width, height);
+		gravel      = tile_sheet.crop(width*9, height*2, width, height);
 		
 		brick_crack_1= tile_sheet.crop(0, height, width, height);
 		brick_crack_2= tile_sheet.crop(width, height, width, height);
@@ -150,7 +162,7 @@ public class Assets {
 		wood         = item_sheet.crop(0, 0, width, height);
 		
 		// World edge
-		edge = tile_sheet.crop(width*8, height, width, height);
+		edge = tile_sheet.crop(width*8, height*2, width, height);
 		
 		// missing texture
 		//missing = sheet.crop(width*4, height*4, width, height);

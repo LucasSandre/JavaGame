@@ -39,6 +39,7 @@ public class World {
 		entity_manager.addEntity(new Boulder(handler, 100, 550));
 		entity_manager.addEntity(new Tree(handler, 500, 250));
 		entity_manager.addEntity(new Boulder(handler, 500, 550));
+		
 		generateWorld("res/World/world.txt");
 		loadWorld(path);
 		entity_manager.getPlayer().setX(spawn_x);
@@ -102,53 +103,333 @@ public class World {
 						bw.write("255 ");
 						continue;
 					}
-					if (y >= 2 && y <= 1002) {
+					if (y >= 2 && y < 502) {
 						bw.write("5 ");
 						continue;
 					}
-					if (y == 1003 && (x == 1003)) {
-						bw.write("13 ");
+					if (y == 502 && (x == 502)) {
+						bw.write("23 ");
 						continue;
 					}
-					if (y == 1003 && x > 1003 && x < 2010){
-						bw.write("6 ");
+					if (y == 502 && x >= 503 && x <= 2509){
+						if (x == 1506 || x == 1507 ) {
+							bw.write("5 ");
+							continue;
+						}
+						bw.write("16 ");
 						continue;
 					}	
-					if (y == 1003 && x == 2010) {
-						bw.write("19 ");
+					if (y == 502 && x == 2510) {
+						bw.write("29 ");
 						continue;
 					}
-					if (y == 1004 && (x > 1003 && x < 2010)) {
-						brick = Integer.toString(rand.nextInt(5)+27);
+					if (y == 503 && (x >= 503 && x <= 2509)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("11 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
 						bw.write(brick + " ");
 						continue;
 					}
-					if (y > 1003 && y < 2019 && ((x == 1003 || x == 2010))) {
-						bw.write("12 ");
+					if (y > 502 && y < 2519 && ((x == 502 || x == 2510))) {
+						bw.write("22 ");
 						continue;
 					}
-					if (y == 2019 && x == 1003) {
-						bw.write("25 ");
+					if (y > 502 && y <= 803 && (x > 502 && x < 2510)){
+						bw.write("4 ");
 						continue;
 					}
-					if (y == 2019 && x == 2010) {
+					if (y == 804 && x == 804) {
+						bw.write("24 ");
+						continue;
+					}
+					if (y == 804 && (x > 804 && x < 2210)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("4 ");
+							continue;
+						}
+						bw.write("17 ");
+						continue;
+					}
+					if (y == 805 && (x > 804 && x < 2210)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("12 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y == 804 && x == 2210) {
+						bw.write("30 ");
+						continue;
+					}
+					if (y > 804 && y < 2218 && (x == 804 || x == 2210)) {
+						bw.write("22 ");
+						continue;
+					}
+					if (y > 1055 && y <= 1255 && (x > 1054 && x < 1960)) {
+						bw.write("2 ");
+						continue;
+					}
+					if (y == 1256 && x == 1256) {
 						bw.write("26 ");
 						continue;
 					}
-					if (y == 2019 && (x > 1003 && x < 2010)) {
-						bw.write("7 ");
+					if (y == 1256 && x == 1758) {
+						bw.write("32 ");
 						continue;
 					}
-					if (y == 2020 && (x >= 1003 && x <=2010)) {
-						brick = Integer.toString(rand.nextInt(5)+27);
+					if (y == 1256 & (x > 1256 && x < 1758)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("2 ");
+							continue;
+						}
+						bw.write("19 ");
+						continue;
+					}
+					if (y == 1257 && (x > 1256 && x < 1758)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("14 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
 						bw.write(brick + " ");
 						continue;
 					}
-					if (y > 1002 && ((x >=2 && x<=1002)||(x >= 2011 && x <= width-1))) {
+					if (y > 1256 && y < 1766 && (x == 1256||x == 1758)) {
+						bw.write("22 ");
+						continue;
+					}
+					if (y > 1257 && y<= 1408 && (x > 1256 && x < 1758)) {
+						bw.write("1 ");
+						continue;
+					}
+					if (y > 1257 && y < 1766 && ((x > 1256 && x <= 1407) || (x >= 1607  && x < 1758))) {
+						bw.write("1 ");
+						continue;
+					}
+					if (y == 1409 && x == 1408) {
+						bw.write("27 ");
+						continue;
+					}
+					if (y == 1409 && x == 1606) {
+						bw.write("33 ");
+						continue;
+					}
+					if (y == 1409 && (x > 1408 && x < 1606)) {
+						if (x == 1506 || x == 1507) {
+							bw.write("1 ");
+							continue;
+						}
+						bw.write("20 ");
+						continue;
+					}
+					if (y == 1410 && (x > 1408 && x < 1606)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("15 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y > 1409 && y < 1613 && (x == 1408 || x == 1606)) {
+						bw.write("22 ");
+						continue;
+					}
+					if (y == 1613 && x == 1408) {
+						bw.write("35 ");
+						continue;
+					}
+					if (y == 1613 && (x > 1408 && x < 1606)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("0 ");
+							continue;
+						}
+						bw.write("21 ");
+						continue;
+					}
+					if (y == 1614 && (x >= 1408 && x <= 1606)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("6 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y == 1613 && x == 1606) {
+						bw.write("36 ");
+						continue;
+					}
+					if (y >= 1615 && y < 1766 & (x > 1256 && x < 1758)) {
+						bw.write("1 ");
+						continue;
+					}
+					if (y == 1766 && x == 1256) {
+						bw.write("35 ");
+						continue;
+					}
+					if (y == 1766 && x == 1758){
+						bw.write("36 ");
+						continue;
+					}
+					if (y == 1766 && (x > 1256 && x < 1758)) {
+						if (x == 1506 || x == 1507) {
+							bw.write("1 ");
+							continue;
+						}
+						bw.write("20 ");
+						continue;
+					}
+					if (y == 1767 && (x >= 1256 && x <= 1758)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("7 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y > 1055 && y < 1967 && ((x > 1055 && x <= 1255) || (x > 1758 && x < 1960))) {
+						bw.write("2 ");
+						continue;
+					}
+					if (y > 1767 && y < 1967 && (x > 1054 && x < 1960)) {
+						bw.write("2 ");
+						continue;
+					}
+					if (y > 804 && y < 1054 && (x > 804 && x < 2210)) {
+						bw.write("3 ");
+						continue;
+					}
+					if (y == 1054 && x == 1054) {
+						bw.write("25 ");
+						continue;
+					}
+					if (y == 1054 && x == 1960) {
+						bw.write("31 ");
+						continue;
+					}
+					if (y == 1054 && (x > 1054 && x < 1960)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("3 ");
+							continue;
+						}
+						bw.write("18 ");
+						continue;
+					}
+					if (y == 1055 && (x > 1054 && x < 1960)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("13 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y > 1054 && y < 1967 && (x == 1054 || x == 1960)) {
+						bw.write("22 ");
+						continue;
+					}
+					if (y == 1967 && x == 1054) {
+						bw.write("35 ");
+						continue;
+					}
+					if (y == 1967 && x == 1960) {
+						bw.write("36 ");
+						continue;
+					}
+					if (y == 1967 && (x > 1054 && x < 1960)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("2 ");
+							continue;
+						}
+						bw.write("19 ");
+						continue;
+					}
+					if (y == 1968 && (x >= 1054 && x <= 1960)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("8 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y > 1968 && y < 2218 && (x > 804 && x < 2210)) {
+						bw.write("3 ");
+						continue;
+					}
+					if (y >= 1054 && y < 2218 && ((x > 804 && x < 1054) || (x > 1960 && x < 2210)) ) {
+						bw.write("3 ");
+						continue;
+					}
+					if (y == 2218 && x == 804) {
+						bw.write("35 ");
+						continue;
+					}
+					if (y == 2218 && x == 2210) {
+						bw.write("36 ");
+						continue;
+					}
+					if (y == 2218 && (x > 804 && x < 2210)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("3 ");
+							continue;
+						}
+						bw.write("18 ");
+						continue;
+					}
+					if (y == 2219 && (x >= 804 && x <= 2210)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("9 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y > 502 && y < 2519 && ((x > 502 && x <= 803)||(x > 2210 && x < 2510))) {
+						bw.write("4 ");
+						continue;
+					}
+					if (y < 2519 && y > 2219 && (x > 502 && x < 2510)) {
+						bw.write("4 ");
+						continue;
+					}
+					if (y == 2519 && x == 502) {
+						bw.write("35 ");
+						continue;
+					}
+					if (y == 2519 && x == 2510) {
+						bw.write("36 ");
+						continue;
+					}
+					if (y == 2519 && (x >= 503 && x <= 2509)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("4 ");
+							continue;
+						}
+						bw.write("17 ");
+						continue;
+					}
+					if (y == 2520 && (x >= 502 && x <= 2510)) {
+						if (x == 1506 || x == 1507 ) {
+							bw.write("10 ");
+							continue;
+						}
+						brick = Integer.toString(rand.nextInt(5)+37);
+						bw.write(brick + " ");
+						continue;
+					}
+					if (y >= 502 && ((x >=2 && x<=502)||(x >= 2510 && x <= width-1))) {
 						bw.write("5 ");
 						continue;
 					}
-					if (y > 2020 && y <= height-1){
+					if (y > 2520 && y <= height-1){
 						bw.write("5 ");
 						continue;
 					}
