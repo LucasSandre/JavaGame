@@ -19,7 +19,7 @@ public class Assets {
 	                            brick_batt_up1, brick_batt_up2, brick_batt_up3, brick_batt_up4,
 	                            brick_batt_up5, brick_batt_up6, grass_fade1, grass_fade2, grass_fade3, grass_fade4, 
 	                            grass_fade5, grass_rfade1, grass_rfade2, grass_rfade3, grass_rfade4, 
-	                            grass_rfade5, edge;
+	                            grass_rfade5, edge, missing;
 	
 	public static BufferedImage[] player_down, player_up, player_right, player_left;
 	public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
@@ -165,6 +165,6 @@ public class Assets {
 		edge = tile_sheet.crop(width*8, height*2, width, height);
 		
 		// missing texture
-		//missing = sheet.crop(width*4, height*4, width, height);
+		missing = tile_sheet.crop(width*16, height*16, width, height);
 	}
 }

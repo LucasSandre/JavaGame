@@ -1,6 +1,7 @@
 package dev.lucas.game.entities.creatures;
 
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -12,14 +13,13 @@ import dev.lucas.game.gfx.Animation;
 import dev.lucas.game.gfx.Assets;
 import dev.lucas.game.inventory.Inventory;
 
-
 public class Player extends Creature {
 	
 	// Animations
 	
 	private Animation anim_down, anim_up, anim_right, anim_left;
 	private Animation attack_anim_down, attack_anim_up, attack_anim_right, attack_anim_left;
-
+	private Rectangle ar;
 	
 	// For Auto Animations
 	private boolean att_down  = false,
@@ -35,10 +35,10 @@ public class Player extends Creature {
 	
 	public Player(Handler handler,float x, float y) {
 		super(handler,x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
-		bounds.x = 18;
+		bounds.x = 16;
 		bounds.y = 24;
-		bounds.width = 27;
-		bounds.height = 39;
+		bounds.width = 28;
+		bounds.height = 38;
 		
 		// Animations
 		
@@ -123,7 +123,11 @@ public class Player extends Creature {
 		else if (att_right){
 			g.drawImage(getCurrentAttackAnimationFrame(),  (int) (x - handler.getGameCamera().getX_offset()+bounds.width+10), (int) (y-handler.getGameCamera().getY_offset()+ (height-height/2.0f)/2.0f), (int) (width/2.0f) , (int)(height/2.0f), null);
 		}
-		
+		g.setColor(Color.red);
+		Rectangle cb = getCollisionBounds(0,0);
+		g.drawRect((int)(cb.x - handler.getGameCamera().getX_offset()), (int)(cb.y - handler.getGameCamera().getY_offset()), cb.width, cb.height);
+		if (ar != null) 
+				g.drawRect((int)(ar.x - handler.getGameCamera().getX_offset()),(int)(ar.y- handler.getGameCamera().getY_offset()), ar.width, ar.height);
 		inventory.render(g);
 	}
 
@@ -135,33 +139,82 @@ public class Player extends Creature {
 			return;
 		}
 		
-		Rectangle ar = new Rectangle();
+		ar = new Rectangle();
 		Rectangle cb = getCollisionBounds(0,0);
 		
-		int ar_size = 40;
+		int ar_size = 60;
 		ar.width = ar_size;
 		ar.height = ar_size;
-		
-		if (handler.getKeyManager().a_up){
+		//System.out.println(handler.getMouseManager().getMouseX() + "   " + (cb.x - handler.getGameCamera().getX_offset()));
+		//System.out.println(handler.getMouseManager().getMouseY() + "   " + (cb.y - handler.getGameCamera().getY_offset())
+		//		+ "   " + (cb.y + cb.height - handler.getGameCamera().getY_offset()));
+		if (handler.getMouseManager().getMouseX()  <  (int)(cb.x - handler.getGameCamera().getX_offset()) &&
+			handler.getMouseManager().getMouseY()  <= (int)(cb.y - handler.getGameCamera().getY_offset()) && 
+			handler.getMouseManager().isLeftPressed()) {
+			// Top Left
+			ar.x = cb.x - cb.width - cb.width/2;
+			ar.y = cb.y - cb.height;
+		}
+		else if (handler.getMouseManager().getMouseX()  > (int)(cb.x+ cb.width- handler.getGameCamera().getX_offset()) &&
+				 handler.getMouseManager().getMouseY()  <= (int)(cb.y- handler.getGameCamera().getY_offset()) && 
+				 handler.getMouseManager().isLeftPressed()) {
+			// Top Right
+			ar.x = cb.x + cb.width;
+			ar.y = cb.y - cb.height;
+		}
+		else if (handler.getMouseManager().getMouseX()  > (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
+				 handler.getMouseManager().getMouseY()  >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) && 
+				 handler.getMouseManager().isLeftPressed()) {
+			// Bottom Right
+			ar.x = cb.x + cb.width;
+			ar.y = cb.y + cb.height;
+		}
+		else if (handler.getMouseManager().getMouseX()  < (int)(cb.x - handler.getGameCamera().getX_offset()) &&
+				 handler.getMouseManager().getMouseY()  >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) && 
+				 handler.getMouseManager().isLeftPressed()) {
+			// Bottom Left
+			ar.x = cb.x - cb.width - cb.width/2;
+			ar.y = cb.y + cb.height;
+		}
+		else if (handler.getMouseManager().getMouseX() >= (cb.x - handler.getGameCamera().getX_offset()) &&
+				 handler.getMouseManager().getMouseX() <= (int)(cb.x + cb.width- handler.getGameCamera().getX_offset()) &&
+				 handler.getMouseManager().getMouseY() <= (int)(cb.y - handler.getGameCamera().getY_offset()) && 
+				 handler.getMouseManager().isLeftPressed()) {
+			// Up
 			ar.x = cb.x + cb.width/2 - ar_size / 2;
 			ar.y = cb.y - ar_size;
 			att_up = true;
 		}
-		else if (handler.getKeyManager().a_down){
+		else if (handler.getMouseManager().getMouseX() >= (int)(cb.x - handler.getGameCamera().getX_offset()) &&
+				 handler.getMouseManager().getMouseX() <= (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
+				 handler.getMouseManager().getMouseY() >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) && 
+				 handler.getMouseManager().isLeftPressed()) {
+			// Down
 			ar.x = cb.x + cb.width/2 - ar_size / 2;
 			ar.y = cb.y + cb.height;
 			att_down = true;
 		}
-		else if (handler.getKeyManager().a_left){
+		
+		else if (handler.getMouseManager().getMouseX() <= (int)(cb.x - handler.getGameCamera().getX_offset()) &&
+				 handler.getMouseManager().getMouseY() >= (int)(cb.y - handler.getGameCamera().getY_offset()) &&
+				 handler.getMouseManager().getMouseY() <= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) &&
+				 handler.getMouseManager().isLeftPressed()) {
+			//Left
 			ar.x = cb.x - ar_size;
 			ar.y = cb.y + cb.height/2 - ar_size/2 ;
 			att_left = true;
 		}
-		else if (handler.getKeyManager().a_right){
+
+		else if (handler.getMouseManager().getMouseX() >= (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
+				 handler.getMouseManager().getMouseY() >= (int)(cb.y - handler.getGameCamera().getY_offset()) &&
+				 handler.getMouseManager().getMouseY() <= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) &&
+				 handler.getMouseManager().isLeftPressed()) {
+			// Right
 			ar.x = cb.x + cb.width;
 			ar.y = cb.y + cb.height/2 - ar_size/2 ;
 			att_right = true;
-		}else {
+		}
+		else {
 			return;
 		}
 		attack_timer = 0;

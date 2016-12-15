@@ -49,8 +49,6 @@ public class World {
 	public void tick() {
 		item_manager.tick();
 		entity_manager.tick();
-		System.out.println(handler.getWorld().getEntity_manager().getPlayer().getX()/ Tile.TILEWIDTH + "  " +
-		handler.getWorld().getEntity_manager().getPlayer().getY()/ Tile.TILEHEIGHT);
 	}
 	
 	public void render(Graphics g) {
@@ -79,11 +77,9 @@ public class World {
 		if ( x < 0 || y < 0 || x >= width|| y>= height){
 			return Tile.grass_tile;
 		}
-		
-		
 		Tile t = Tile.tiles[tiles[x][y]];
 		if (t == null) {
-			return Tile.dirt_tile;
+			return Tile.missing_texture_tile;
 		}
 		return t;
 	}
@@ -99,8 +95,9 @@ public class World {
 			bw.write("1506 1511\n" );
 			for (int y = 1; y <= height; y++) {
 				for (int x = 1; x <= width; x++) {
-					if (y==1||x==1||y==height||x==width){
-						bw.write("255 ");
+					if ((y == 1 || y == height)&& (x >=1 && x<= width) ||
+						(y >= 2 && y <=height && (x == 1 || x == width))){
+						bw.write("254 ");
 						continue;
 					}
 					if (y >= 2 && y < 502) {
@@ -434,6 +431,7 @@ public class World {
 						continue;
 					}
 					bw.write("0 ");
+					continue;
 				}
 				if (y != height-1)
 					bw.write('\n');

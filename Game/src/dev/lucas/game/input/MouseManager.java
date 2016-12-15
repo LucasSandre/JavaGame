@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+
 import dev.lucas.game.ui.UIManager;
 
 public class MouseManager implements MouseListener,  MouseMotionListener{
@@ -19,29 +20,6 @@ public class MouseManager implements MouseListener,  MouseMotionListener{
 	public void setUIManager(UIManager ui_manager){
 		this.ui_manager = ui_manager;
 	}
-	
-	// Getters
-	
-	public boolean isLeftPressed() {
-		return left_pressed;
-	}
-
-	public boolean isMiddlePressed() {
-		return middle_pressed;
-	}
-
-	public boolean isRightPressed() {
-		return right_pressed;
-	}
-
-	public int getMouseX() {
-		return mouse_x;
-	}
-
-	public int getMouseY() {
-		return mouse_y;
-	}
-	
 	
 	// Implemented methods
 	
@@ -108,4 +86,28 @@ public class MouseManager implements MouseListener,  MouseMotionListener{
 		}
 	}
 
+	// Getters
+	
+	public boolean isLeftPressed() {
+		return left_pressed;
+	}
+
+	public boolean isMiddlePressed() {
+		return middle_pressed;
+	}
+
+	public boolean isRightPressed() {
+		return right_pressed;
+	}
+
+	public int getMouseX() {
+		return mouse_x;
+	}
+
+	public int getMouseY() {
+		return mouse_y;
+	}
+	
+	
+	
 }
