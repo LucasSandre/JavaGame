@@ -58,6 +58,10 @@ public class Inventory {
 		return handler;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
 	public void setHandler(Handler handler) {
 		this.handler = handler;
 	}

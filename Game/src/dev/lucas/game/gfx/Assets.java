@@ -9,7 +9,7 @@ public class Assets {
 	private static final int width = 32, height = 32;
 
 	
-	public static BufferedImage player_still, stone, grass, tree, boulder, dirt, wood, gravel, 
+	public static BufferedImage stone, grass, tree, boulder, dirt, wood, gravel, 
 	                            grass_noob, grass_easy, grass_med, grass_diff, grass_hard,
 	                            brick_crack_1, brick_crack_2, brick_crack_3, brick_grate,
 	                            brick_clean, brick_batt_side, brick_bottom_right, brick_bottom_left, 
@@ -21,10 +21,14 @@ public class Assets {
 	                            grass_fade5, grass_rfade1, grass_rfade2, grass_rfade3, grass_rfade4, 
 	                            grass_rfade5, edge, missing;
 	
-	public static BufferedImage[] player_down, player_up, player_right, player_left;
+	public static BufferedImage[] player_down, player_right_down, player_left_down, player_up,
+								  player_right_up, player_left_up, player_right, player_left, player_still;
+	
+	public static BufferedImage[] attack_down, attack_right_down, attack_left_down, attack_up,
+								  attack_right_up, attack_left_up, attack_right, attack_left;
+	
 	public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
 	public static BufferedImage[] start;
-	public static BufferedImage[] attack_up, attack_down, attack_right, attack_left;
 	public static Font[] font_10, font_11, font_12, font_14,
 	                   font_18, font_24, font_30, font_32;
 	
@@ -63,17 +67,28 @@ public class Assets {
 		font_30_fm = FontLoader.loadFontMetrics(g, font_30);
 		font_32_fm = FontLoader.loadFontMetrics(g, font_32);
 		
-		player_down = new BufferedImage[2];
-		player_up = new BufferedImage[2];
-		player_right = new BufferedImage[2];
-		player_left = new BufferedImage[2];
+		player_right = new BufferedImage[6];
+		player_down = new BufferedImage[4];
+		player_left = new BufferedImage[6];
+		player_up = new BufferedImage[4];
+	
+		player_right_down = new BufferedImage[6];
+		player_left_down = new BufferedImage[6];
+		player_right_up = new BufferedImage[6];
+		player_left_up = new BufferedImage[6];
+		
+		player_still = new BufferedImage[8];
+		
+		attack_up = new BufferedImage[13];
+		attack_down = new BufferedImage[13];
+		attack_left = new BufferedImage[13];
+		attack_right = new BufferedImage[13];
+		attack_right_down = new BufferedImage[13];
+		attack_right_up = new BufferedImage[13];
+		attack_left_up = new BufferedImage[13];
+		attack_left_down = new BufferedImage[13];
 		
 		start = new BufferedImage[2];
-		
-		attack_up = new BufferedImage[8];
-		attack_down = new BufferedImage[8];
-		attack_left = new BufferedImage[8];
-		attack_right = new BufferedImage[8];
 		
 		zombie_down = new BufferedImage[3];
 		zombie_left = new BufferedImage[3];
@@ -82,21 +97,32 @@ public class Assets {
 		
 		// For loops for animations
 		
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 4; i++) {
 			player_down[i] = entity_sheet.crop(width*i, 0, width, height);
-			player_up[i]   = entity_sheet.crop(width*i, height, width, height);
-			player_left[i] = entity_sheet.crop(width*i, height*2, width, height);
-			player_right[i]= entity_sheet.crop(width*i, height*3, width, height);
+			player_up[i]   = entity_sheet.crop(width*i, height*4, width, height);
+		}
+		for (int i = 0; i < 6; i++){
+			player_right_down[i] = entity_sheet.crop(width*i, height, width, height);
+			player_right[i] = entity_sheet.crop(width*i,height*2, width, height);
+			player_right_up[i] = entity_sheet.crop(width*i, height*3, width, height);
+			player_left_up[i] = entity_sheet.crop(width*i, height*5, width, height);
+			player_left[i] = entity_sheet.crop(width*i, height*6, width, height);
+			player_left_down[i] = entity_sheet.crop(width*i, height*7, width, height);
+		}
+		for (int i = 0; i < 13; i++) {
+			attack_down[i]       = attack_sheet.crop(width * i, 0, width, height);
+			attack_right_down[i] = attack_sheet.crop(width * i, height, width, height);
+			attack_right[i]      = attack_sheet.crop(width * i, height*2, width, height);
+			attack_right_up[i]   = attack_sheet.crop(width * i, height*3, width, height);
+			attack_up[i]         = attack_sheet.crop(width * i, height*4, width, height);
+			attack_left_up[i]    = attack_sheet.crop(width * i, height*5, width, height);
+			attack_left[i]       = attack_sheet.crop(width * i, height*6, width, height);
+			attack_left_down[i]  = attack_sheet.crop(width * i, height*7, width, height);
 		}
 		
-		for (int i = 7,index = 0; i > -1; i--) {
-			attack_up[index] = attack_sheet.crop(width*i, 0, width, height);
-			attack_down[index]  = attack_sheet.crop(width*i, height, width, height);
-			attack_right[index] = attack_sheet.crop(width*i, height*2, width, height);
-			attack_left[index] = attack_sheet.crop(width*i, height*3, width, height);
-			index++;
+		for (int i = 0; i < 8; i++) {
+			player_still[i] = entity_sheet.crop(0, height * i, width, height);
 		}
-		
 		
 		start[0]        = ui_sheet.crop(0,0,width*2,height);  
 		start[1]        = ui_sheet.crop(width*2,0,width*2,height);
@@ -155,10 +181,7 @@ public class Assets {
 		
 		// Static Sprites
 		tree         = static_sheet.crop(0, 0, width, height);
-		boulder      = static_sheet.crop(0, height, width, height);
-		
-		player_still = entity_sheet.crop(width*2, 0, width, height); 
-		
+		boulder      = static_sheet.crop(0, height, width, height);		
 		wood         = item_sheet.crop(0, 0, width, height);
 		
 		// World edge

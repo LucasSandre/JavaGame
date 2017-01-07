@@ -7,7 +7,8 @@ import dev.lucas.game.tiles.Tile;
 public abstract class Creature extends Entity {
 
 	
-	public static final float DEFAULT_SPEED = 150.0f;
+	public static final float MAX_SPEED = 7.5f;
+	public static final float SPEED_CHANGE = 0.2f;
 	public static final int DEFAULT_CREATURE_WIDTH = 64,
 							DEFAULT_CREATURE_HEIGHT = 64;
 	
@@ -16,12 +17,13 @@ public abstract class Creature extends Entity {
 	
 	public Creature(Handler handler,float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
-		speed = DEFAULT_SPEED;
+		speed = 0;
 		xMove = 0; 
 		yMove = 0;
 	}
 
 	public void move() {
+		
 		if (!checkEntityCollisions(xMove,0f)) {
 			moveX();	
 		}
