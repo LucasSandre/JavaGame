@@ -1,0 +1,4 @@
+Documentation for Classes that inherit the Tile Classes
+
+1. the Class Constructor takes in an integer and sets the Tiles Id to that integer and passes the corresponding texture to the type of tile.
+2. There may be an overridden method called "IsSolid()". If so it makes the tile solid (i.e. it can not be walked threw)

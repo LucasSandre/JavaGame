@@ -10,6 +10,9 @@ import dev.lucas.game.tiles.Tile;
 
 public class Tree extends StaticEntity{
 
+	// The Class Constructor, takes in a handler and an x and y
+		// passes the handler, x , y, and size variables to the super constructor
+		// creates the bounding box
 	public Tree(Handler handler, float x, float y) {
 		super(handler,x,y,Tile.TILEWIDTH*2, Tile.TILEHEIGHT*2);
 		bounds.x = 40;
@@ -20,18 +23,20 @@ public class Tree extends StaticEntity{
 
 	@Override
 	public void tick() {
-		
+		// does not tick
 		
 	}
 
 	@Override
 	public void render(Graphics g) {
+		// draws the tree in the world
 		g.drawImage(Assets.tree, (int) (x-handler.getGameCamera().getX_offset()), (int) (y-handler.getGameCamera().getY_offset()), width, height, null);
-		
+		g.drawRect((int)(x + bounds.x - handler.getGameCamera().getX_offset()), (int) (y + bounds.y - handler.getGameCamera().getY_offset()), bounds.width, bounds.height);
 	}
 
 	@Override
 	public void die() {
+		// drops a sapling and a log when the tree dies.
 		handler.getWorld().getItem_manager().addItem(Item.wood_item.createNew(
 				(int) itemDropX(x, Tile.TILEWIDTH*2),
 				(int) itemDropY(y, Tile.TILEHEIGHT*2)));
@@ -41,6 +46,7 @@ public class Tree extends StaticEntity{
 				(int) itemDropY(y, Tile.TILEHEIGHT*2) ));
 	}
 
+	// methods for random drop placement for 
 	@Override
 	public float itemDropX(float x, int width) {
 		Random rand = new Random();

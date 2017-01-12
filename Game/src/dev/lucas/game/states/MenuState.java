@@ -1,5 +1,6 @@
 package dev.lucas.game.states;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import dev.lucas.game.Handler;
@@ -11,8 +12,10 @@ import dev.lucas.game.ui.UIText;
 
 public class MenuState extends State {
 	
+	// Initializes a private ui_manager object
 	private UIManager ui_manager;
 	
+	// The MenuState constructor and takes in a handler object. pases the handler to the super constructor, creates a Ui manager, sets it in the handler, adds some UI objects that can change the stae
 	public MenuState(Handler handler) {
 		super(handler);
 		ui_manager = new UIManager(handler);
@@ -24,8 +27,10 @@ public class MenuState extends State {
 				State.setState(handler.getGame().game_state);
 			}
 		}));
-		ui_manager.addObject(new UIText(400,100,128,64,Assets.font_32[0],"TEST",new ClickListener() {
+		ui_manager.addObject(new UIText(400,100,128,64,Assets.font_32[0], Color.cyan, "TEST", new ClickListener() {
 
+			
+			// this method gets called when the object is clicked on.
 			@Override
 			public void onClick() {
 				System.out.println("TEST");
@@ -36,7 +41,7 @@ public class MenuState extends State {
 
 	@Override
 	public void tick() {
-		ui_manager.tick();
+		ui_manager.tick(); // ticks the Uimanager
 		
 		// Temporarily skip start button
 		//handler.getMouseManager().setUIManager(null);
@@ -45,7 +50,7 @@ public class MenuState extends State {
 	
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics g) { // renders the Uimanager.
 		ui_manager.render(g);
 	}
 }

@@ -6,14 +6,16 @@ import dev.lucas.game.input.MouseManager;
 import dev.lucas.game.worlds.World;
 
 public class Handler {
-
+	// Initializes a Game variable and World Variable.
 	private Game game;
 	private World world;
 	
+	// the handler constructor takes in a game object and sets the game variable equal to it.
 	public Handler(Game game) {
 		this.game = game;
 	}
 	
+	// Helpful getters and setters for various important classes.
 	public GameCamera getGameCamera(){
 		return game.getGameCamera();
 	}

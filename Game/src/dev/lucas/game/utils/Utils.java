@@ -7,6 +7,7 @@ import java.io.IOException;
 public class Utils {
 	
 	public static String loadFileAsString(String path) {
+		// turns the content of a file into a large string that goes to a new line when the files does.
 		StringBuilder builder = new StringBuilder();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
@@ -23,6 +24,7 @@ public class Utils {
 	}
 	
 	public static int parseInt(String num) {
+		// converts a string into a number and catches if the string given is not all numbers.
 		try{
 			return Integer.parseInt(num);
 		}

@@ -8,7 +8,7 @@ import dev.lucas.game.tiles.grass.*;
 
 public class Tile {
 	
-	// Static Variables here
+	// Static Variables here, creates Tile variables. tiles array holds every type of tile.
 	
 	public static Tile[] tiles = new Tile[256];
 	public static Tile grass_tile = new GrassTile(0);
@@ -70,6 +70,7 @@ public class Tile {
 	protected BufferedImage texture;
 	protected final int id;
 	
+	// Tile Constructor takes in an image and an int. After it stores the values and adds the new tile to the tiles array @ index 'id'
 	public Tile(BufferedImage texture,int id) {
 		this.texture = texture;
 		this.id = id;
@@ -77,15 +78,18 @@ public class Tile {
 		tiles[id] = this;
 	}
 
+	// NOt implemented but animated and intractable tiles could be included.
 	public void tick () {
 		
 	}
 	
+	// Draws the tile with its texture
 	public void render(Graphics g, int x, int y) {
 		g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT, null);
 		
 	}
 	
+	// Getters
 	public int getId() {
 		return id;
 	}

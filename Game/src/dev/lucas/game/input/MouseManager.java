@@ -106,8 +106,6 @@ public class MouseManager implements MouseListener,  MouseMotionListener{
 
 	public int getMouseY() {
 		return mouse_y;
-	}
-	
-	
+	}	
 	
 }

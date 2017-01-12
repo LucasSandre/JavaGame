@@ -5,10 +5,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Assets {
-	
+
+	// Initializes private width and height variables to the resolution of the spites inside each sprite_map.
 	private static final int width = 32, height = 32;
 
-	
+	// Initializes public static Buffered Image variables for textures derived from sprite sheets.
 	public static BufferedImage stone, grass, tree, boulder, dirt, wood, gravel, 
 	                            grass_noob, grass_easy, grass_med, grass_diff, grass_hard,
 	                            brick_crack_1, brick_crack_2, brick_crack_3, brick_grate,
@@ -21,6 +22,7 @@ public class Assets {
 	                            grass_fade5, grass_rfade1, grass_rfade2, grass_rfade3, grass_rfade4, 
 	                            grass_rfade5, edge, missing;
 	
+	// Initializes public static Buffered Image Arrays for animations and reactivity. 
 	public static BufferedImage[] player_down, player_right_down, player_left_down, player_up,
 								  player_right_up, player_left_up, player_right, player_left, player_still;
 	
@@ -28,10 +30,15 @@ public class Assets {
 								  attack_right_up, attack_left_up, attack_right, attack_left;
 	
 	public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
+	public static BufferedImage[] rainbow_proj;
 	public static BufferedImage[] start;
+	
+	
+	// Initializes public static Font arrays
 	public static Font[] font_10, font_11, font_12, font_14,
 	                   font_18, font_24, font_30, font_32;
-	
+
+	// Initializes public static font metric arrays
 	public static FontMetrics[] font_10_fm = new FontMetrics[3], font_11_fm, font_12_fm, font_14_fm,
 	                            font_18_fm, font_24_fm, font_30_fm, font_32_fm;
 	
@@ -45,6 +52,7 @@ public class Assets {
 		SpriteSheet ui_sheet     = new SpriteSheet(ImageLoader.loadImage("/textures/UISheet.png"));
 		SpriteSheet item_sheet   = new SpriteSheet(ImageLoader.loadImage("/textures/ItemSheet.png"));
 		SpriteSheet attack_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/Attackmap.png"));
+		SpriteSheet proj_sheet   = new SpriteSheet(ImageLoader.loadImage("/textures/ProjectileSheet.png"));
 		
 		// Get Fonts
 		
@@ -67,6 +75,7 @@ public class Assets {
 		font_30_fm = FontLoader.loadFontMetrics(g, font_30);
 		font_32_fm = FontLoader.loadFontMetrics(g, font_32);
 		
+		// Creates the arrays for animations and allocates the size of each array to the amount of frams in the animmation.
 		player_right = new BufferedImage[6];
 		player_down = new BufferedImage[4];
 		player_left = new BufferedImage[6];
@@ -95,6 +104,8 @@ public class Assets {
 		zombie_right = new BufferedImage[3];
 		zombie_up = new BufferedImage[3];
 		
+		rainbow_proj = new BufferedImage[7];
+		
 		// For loops for animations
 		
 		for(int i = 0; i < 4; i++) {
@@ -119,11 +130,14 @@ public class Assets {
 			attack_left[i]       = attack_sheet.crop(width * i, height*6, width, height);
 			attack_left_down[i]  = attack_sheet.crop(width * i, height*7, width, height);
 		}
-		
 		for (int i = 0; i < 8; i++) {
 			player_still[i] = entity_sheet.crop(0, height * i, width, height);
 		}
+		for (int i = 0; i < 7; i++) {
+			rainbow_proj[i] = proj_sheet.crop(width * i, 0, width, height);
+		}
 		
+		// importing the ui objects
 		start[0]        = ui_sheet.crop(0,0,width*2,height);  
 		start[1]        = ui_sheet.crop(width*2,0,width*2,height);
 		

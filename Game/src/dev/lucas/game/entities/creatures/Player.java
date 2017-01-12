@@ -1,14 +1,14 @@
 package dev.lucas.game.entities.creatures;
 
 
-import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import dev.lucas.game.Handler;
-import dev.lucas.game.entities.Entity;
+import dev.lucas.game.entities.projectiles.Arrow;
 import dev.lucas.game.gfx.Animation;
 import dev.lucas.game.gfx.Assets;
 import dev.lucas.game.inventory.Inventory;
@@ -78,7 +78,10 @@ public class Player extends Creature {
 		attack_anim_right_down = new Animation(20,Assets.attack_right_down);
 		attack_anim_left_down = new Animation(20,Assets.attack_left_down);
 		
+		// Sets the name of the entity
+		name = new String("PLAYER");
 		
+		// Creates the players inventory
 		inventory = new Inventory(handler);
 	}
 
@@ -96,6 +99,7 @@ public class Player extends Creature {
 		anim_left_down.tick();
 		
 		// Attack Animations
+		// All of these check for if the player is attacking and in which direction, ticks the animation and checks if the animation was reset back to the first frame.
 		if (att_up) {
 			attack_anim_up.tick();
 			if (attack_anim_up.getIndex() == 0){
@@ -171,132 +175,105 @@ public class Player extends Creature {
 	
 	@Override
 	public void render(Graphics g) {
+		// If the player is not attacking use walking animations
 		if (attacking == false) {
 			g.drawImage(getCurrentPlayerAnimationFrame(), (int) (x - handler.getGameCamera().getX_offset()), (int) (y-handler.getGameCamera().getY_offset()), width ,height, null);
 		}
+		// If the player is attacking use attacking animation
 		else if (attacking == true) {
 			g.drawImage(getCurrentAttackAnimationFrame(),  (int) (x - handler.getGameCamera().getX_offset()), (int) (y-handler.getGameCamera().getY_offset()), (int) (width) , (int) (height), null);
 		}
-		g.setColor(Color.red);
-		Rectangle cb = getCollisionBounds(0,0);
-		g.drawRect((int)(cb.x - handler.getGameCamera().getX_offset()), (int)(cb.y - handler.getGameCamera().getY_offset()), cb.width, cb.height);
+		//g.setColor(Color.red);
+		//Rectangle cb = getCollisionBounds(0,0);
+		//g.drawRect((int)(cb.x - handler.getGameCamera().getX_offset()), (int)(cb.y - handler.getGameCamera().getY_offset()), cb.width, cb.height);
 		inventory.render(g);
 	}
-
+	
 	private void checkAttacks() {
+		// Increases the attack timer and checks if the cooldown has worn down.
 		attack_timer += System.currentTimeMillis() - last_attack_timer;
 		last_attack_timer = System.currentTimeMillis();
-		
-		if (attack_timer < attack_cooldown){
+		if (attack_timer < attack_cooldown) {
 			return;
 		}
-		Rectangle ar = new Rectangle();
+		// gets the collision bounds of the player.
 		Rectangle cb = getCollisionBounds(0,0);
 		
-		int ar_size = 60;
-		ar.width = ar_size;
-		ar.height = ar_size;
-		//System.out.println(handler.getMouseManager().getMouseX() + "   " + (cb.x - handler.getGameCamera().getX_offset()));
-		//System.out.println(handler.getMouseManager().getMouseY() + "   " + (cb.y - handler.getGameCamera().getY_offset())
-		//		+ "   " + (cb.y + cb.height - handler.getGameCamera().getY_offset()));
-		if (handler.getMouseManager().getMouseX()  <  (int)(cb.x - handler.getGameCamera().getX_offset()) &&
-			handler.getMouseManager().getMouseY()  <= (int)(cb.y - handler.getGameCamera().getY_offset()) && 
-			handler.getMouseManager().isLeftPressed()) {
-			// Top Left
-			attacking = true;
-			ar.x = cb.x - cb.width - cb.width/2;
-			ar.y = cb.y - cb.height;
-			att_left_up = true;
-		}
-		else if (handler.getMouseManager().getMouseX()  > (int)(cb.x+ cb.width- handler.getGameCamera().getX_offset()) &&
-				 handler.getMouseManager().getMouseY()  <= (int)(cb.y- handler.getGameCamera().getY_offset()) && 
-				 handler.getMouseManager().isLeftPressed()) {
-			// Top Right
-			attacking = true;
-			ar.x = cb.x + cb.width;
-			ar.y = cb.y - cb.height;
-			att_right_up = true;
-		}
-		else if (handler.getMouseManager().getMouseX()  > (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
-				 handler.getMouseManager().getMouseY()  >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) && 
-				 handler.getMouseManager().isLeftPressed()) {
-			// Bottom Right
-			attacking = true;
-			ar.x = cb.x + cb.width;
-			ar.y = cb.y + cb.height;
-			att_right_down = true;
-		}
-		else if (handler.getMouseManager().getMouseX()  < (int)(cb.x - handler.getGameCamera().getX_offset()) &&
-				 handler.getMouseManager().getMouseY()  >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) && 
-				 handler.getMouseManager().isLeftPressed()) {
-			// Bottom Left
-			attacking = true;
-			ar.x = cb.x - cb.width - cb.width/2;
-			ar.y = cb.y + cb.height;
-			att_left_down = true;
-		}
-		else if (handler.getMouseManager().getMouseX() >= (cb.x - handler.getGameCamera().getX_offset()) &&
-				 handler.getMouseManager().getMouseX() <= (int)(cb.x + cb.width- handler.getGameCamera().getX_offset()) &&
-				 handler.getMouseManager().getMouseY() <= (int)(cb.y - handler.getGameCamera().getY_offset()) && 
-				 handler.getMouseManager().isLeftPressed()) {
-			// Up
-			attacking = true;
-			ar.x = cb.x + cb.width/2 - ar_size / 2;
-			ar.y = cb.y - ar_size;
-			att_up = true;
-		}
-		else if (handler.getMouseManager().getMouseX() >= (int)(cb.x - handler.getGameCamera().getX_offset()) &&
-				 handler.getMouseManager().getMouseX() <= (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
-				 handler.getMouseManager().getMouseY() >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) && 
-				 handler.getMouseManager().isLeftPressed()) {
-			// Down
-			attacking = true;
-			ar.x = cb.x + cb.width/2 - ar_size / 2;
-			ar.y = cb.y + cb.height;
-			att_down = true;
-		}
 		
-		else if (handler.getMouseManager().getMouseX() <= (int)(cb.x - handler.getGameCamera().getX_offset()) &&
-				 handler.getMouseManager().getMouseY() >= (int)(cb.y - handler.getGameCamera().getY_offset()) &&
-				 handler.getMouseManager().getMouseY() <= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) &&
-				 handler.getMouseManager().isLeftPressed()) {
-			//Left
-			attacking = true;
-			ar.x = cb.x - ar_size;
-			ar.y = cb.y + cb.height/2 - ar_size/2 ;
-			att_left = true;
-		}
-
-		else if (handler.getMouseManager().getMouseX() >= (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
-				 handler.getMouseManager().getMouseY() >= (int)(cb.y - handler.getGameCamera().getY_offset()) &&
-				 handler.getMouseManager().getMouseY() <= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset()) &&
-				 handler.getMouseManager().isLeftPressed()) {
-			// Right
-			attacking = true;
-			ar.x = cb.x + cb.width;
-			ar.y = cb.y + cb.height/2 - ar_size/2 ;
-			att_right = true;
-		}
-		else {
-			return;
-		}
-		attack_timer = 0;
-		for (Entity e: handler.getWorld().getEntity_manager().getEntities()) {
-			if (e.equals(this)){
-				continue;
+		// Checks where the mouse was left clicked and where it wass clicked and updates animation varialbles
+		if (handler.getMouseManager().isLeftPressed()) {			
+			if (handler.getMouseManager().getMouseX()  <  (int)(cb.x - handler.getGameCamera().getX_offset()) &&
+				handler.getMouseManager().getMouseY()  <= (int)(cb.y - handler.getGameCamera().getY_offset())) {
+				// Animation trigger code for top left
+				attacking = true;
+				att_left_up = true;
 			}
-			if (e.getCollisionBounds(0, 0).intersects(ar)) {
-				e.hurt(1);
+			else if (handler.getMouseManager().getMouseX()  > (int)(cb.x+ cb.width- handler.getGameCamera().getX_offset()) &&
+				     handler.getMouseManager().getMouseY()  <= (int)(cb.y- handler.getGameCamera().getY_offset())) {
+				// Animation trigger code for Top Right
+				attacking = true;
+				att_right_up = true;
+			}
+			else if (handler.getMouseManager().getMouseX()  > (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
+					handler.getMouseManager().getMouseY()  >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset())) {
+				// Animation trigger code for Bottom Right
+				attacking = true;
+				att_right_down = true;
+			}
+			else if (handler.getMouseManager().getMouseX()  < (int)(cb.x - handler.getGameCamera().getX_offset()) &&
+					 handler.getMouseManager().getMouseY()  >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset())) {
+				// Animation trigger code for Bottom Left
+				attacking = true;
+				att_left_down = true;
+			}
+			else if (handler.getMouseManager().getMouseX() >= (cb.x - handler.getGameCamera().getX_offset()) &&
+					 handler.getMouseManager().getMouseX() <= (int)(cb.x + cb.width- handler.getGameCamera().getX_offset()) &&
+					 handler.getMouseManager().getMouseY() <= (int)(cb.y - handler.getGameCamera().getY_offset())) {
+				// Animation trigger code for Up
+				attacking = true;
+				att_up = true;
+			}
+			else if (handler.getMouseManager().getMouseX() >= (int)(cb.x - handler.getGameCamera().getX_offset()) &&
+					 handler.getMouseManager().getMouseX() <= (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
+					 handler.getMouseManager().getMouseY() >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset())) {
+				// Animation trigger code for Down
+				attacking = true;
+				att_down = true;
+			}
+			else if (handler.getMouseManager().getMouseX() <= (int)(cb.x - handler.getGameCamera().getX_offset()) &&
+					 handler.getMouseManager().getMouseY() >= (int)(cb.y - handler.getGameCamera().getY_offset()) &&
+					 handler.getMouseManager().getMouseY() <= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset())) {
+				// Animation trigger code for Left
+				attacking = true;
+				att_left = true;
+			}
+			else if (handler.getMouseManager().getMouseX() >= (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
+					 handler.getMouseManager().getMouseY() >= (int)(cb.y - handler.getGameCamera().getY_offset()) &&
+					 handler.getMouseManager().getMouseY() <= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset())) {
+				// Animation trigger code for Right
+				attacking = true;
+				att_right = true;
+			}
+			else {
 				return;
 			}
+			// Adds the projectile to the world and resets the attack timer.
+			handler.getWorld().getEntity_manager().addProjectile(new Arrow(handler, x, y, handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), name));
+			attack_timer = 0;
 		}
 		
 	}
-	
+
 	private void getInput() {
+		// Resets xMove and yMove variables
 		xMove = 0;
 		yMove = 0;
 		
+		// For the Following Checks for which directional buttons are pressed and increases the speed.
+		// Changes what still should be used when the player stops
+		// Changes boolean variables to identify what button is pressed
+		// Changes xMove and yMove
+		// End Result = gradually increases speed until max speed it acheived
 		if (handler.getKeyManager().up && handler.getKeyManager().left) {
 			speed += SPEED_CHANGE;
 			if (speed > MAX_SPEED) {
@@ -429,6 +406,13 @@ public class Player extends Creature {
 			right = true;
 			xMove = speed;
 		}
+		
+		// Checks if no directional buttons are pressed
+		// decreases Speed
+		// If Speed returns to 0 or - beyond
+			// sets all directional booleans to false
+		// depending on the directional boolean variable it changes xMove and yMove
+		// End result = gradual slow down of player to a stop.
 		if (!(handler.getKeyManager().right) && !(handler.getKeyManager().left) &&
 			!(handler.getKeyManager().up)    && !(handler.getKeyManager().down)){
 			speed -= SPEED_CHANGE;
@@ -474,6 +458,7 @@ public class Player extends Creature {
 		}
 	}
 	
+	// methods allow items to be added to the world after the player dies in a random location based on the inputed values
 	@Override
 	public float itemDropX(float x, int width) {
 		Random rand = new Random();
@@ -491,7 +476,7 @@ public class Player extends Creature {
 	
 	@Override
 	public void die() {
-		
+		// What happens when the player dies.
 		
 	}
 	
@@ -504,7 +489,8 @@ public class Player extends Creature {
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
 	}
-
+	
+	// Based on the xMove and yMove variables, returns the corresponding animation frame for the direction the player is traveling
 	private BufferedImage getCurrentPlayerAnimationFrame() {
 		if (xMove < 0 && yMove < 0) {
 			return anim_left_up.getCurrentFrame();
@@ -533,6 +519,7 @@ public class Player extends Creature {
 		return Assets.player_still[player_i];
 	}
 	
+	//Based on the boolean variables, returns Attack animation frame for the player
 	private BufferedImage getCurrentAttackAnimationFrame() {
 		if (att_up) {
 			return attack_anim_up.getCurrentFrame();
@@ -558,7 +545,7 @@ public class Player extends Creature {
 		else if (att_left_down) {
 			return attack_anim_left_down.getCurrentFrame();
 		}
-		return null;
+		return Assets.player_still[player_i];
 		
 		
 	}

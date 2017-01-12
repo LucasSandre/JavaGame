@@ -9,10 +9,7 @@ import dev.lucas.game.gfx.Assets;
 
 public class Item {
 	
-	
-	
-	// Handler
-	
+	// Initializes an Array called items that will store everytype of Item
 	public static Item[] items = new Item[256];
 	public static Item wood_item = new Item(Assets.wood,"Wood",0);
 	public static Item rock_item = new Item(Assets.boulder,"Rock",1);
@@ -21,6 +18,7 @@ public class Item {
 	// Class
 	public static final int ITEMWIDTH = 32, ITEMHEIGHT = 32;
 	
+	// Initializes necessary functional qualities for items
 	protected Handler handler;
 	protected BufferedImage texture;
 	protected String name;
@@ -30,13 +28,13 @@ public class Item {
 	protected boolean picked_up = false;
 	protected Rectangle bounds;
 	
-	
+	// Initializes timer variables for item 'floating' and a state variable
 	private long timer = 0,
 			     last_time = System.currentTimeMillis(),
 			     speed = 500;
-	
 	private boolean UpDown = false;
 	
+	// The class Constructor takes in a texture, a string and an id, saves these variables and makes the item count 1, makes the class instance saved in an Array stored at index 'id'. sets the bounding box for the item.
 	public Item(BufferedImage texture, String name, int ID) {
 		this.texture = texture;
 		this.name = name;
@@ -50,15 +48,15 @@ public class Item {
 	
 	public void tick() {
 		
-		// Picking up check
+		// Picking up check and adds the item into the players inventory.
 		if (handler.getWorld().getEntity_manager().getPlayer().getCollisionBounds(0,0).intersects(bounds)) {
 			picked_up = true;
 			handler.getWorld().getEntity_manager().getPlayer().getInventory().addItem(this);
 		}
 		
 		
-		// Item Animation
-		if (count >=1){
+		// Item Animation, increases and decreases the y value based on the value of 'UpDown' and sets the speed that this occurs at to 1/2 a second. and when the timer equals the speed variable it flips the state of 'UpDown'
+		if (count >=1) {
 			timer += System.currentTimeMillis() - last_time;
 			last_time = System.currentTimeMillis();
 			if (UpDown){
@@ -76,6 +74,7 @@ public class Item {
 	}
 	
 	public void render(Graphics g) {
+		// calls the render the item if handler is not empty.
 		if (handler == null) {
 			return;
 		}
@@ -83,15 +82,18 @@ public class Item {
 	}
 	
 	public void render(Graphics g, int x, int y) {
+		// renders the item.
 		g.drawImage(texture, x, y, ITEMWIDTH, ITEMHEIGHT, null);
 	}
 
+	// creates a new Item at a position and returns the item.
 	public Item createNew(int x, int y) {
 		Item i = new Item(texture,name,ID);
 		i.setPosition(x, y);
 		return i;
 	}
 	
+	// Sets the position of the item and changes the bounding boxes.
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;

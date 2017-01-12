@@ -17,47 +17,56 @@ import dev.lucas.game.utils.Utils;
 
 public class World {
 	
+	// Initializes some private int's and a private Handler
 	private int width, height;
 	private int [][] tiles;
 	private Handler handler;
 	private int spawn_x,spawn_y;
 
-	// Entities
+	// For Entities
 	
 	public EntityManager entity_manager;
 	
-	// Items
+	// For Items
 	private ItemManager item_manager;
 	
+	// Constructor for the World, needs a handler and a path.
 	public World (Handler handler, String path) {
 		this.handler = handler;
+		
+		// Creates the managers.
 		entity_manager = new EntityManager(handler, new Player(handler , 100, 100));
 		item_manager = new ItemManager(handler);
 		
 		// Temporary entity code
-		entity_manager.addEntity(new Tree(handler, 100, 250));
-		entity_manager.addEntity(new Boulder(handler, 100, 550));
-		entity_manager.addEntity(new Tree(handler, 500, 250));
-		entity_manager.addEntity(new Boulder(handler, 500, 550));
+		entity_manager.addEntity(new Tree(handler, 1500 * Tile.TILEHEIGHT, 1500 * Tile.TILEHEIGHT));
+		entity_manager.addEntity(new Boulder(handler, 1550*Tile.TILEHEIGHT, 1500*Tile.TILEHEIGHT));
+		entity_manager.addEntity(new Tree(handler, 1600*Tile.TILEHEIGHT, 1500*Tile.TILEHEIGHT));
+		entity_manager.addEntity(new Boulder(handler, 1650*Tile.TILEHEIGHT, 1500*Tile.TILEHEIGHT));
 		
-		generateWorld("res/World/world.txt");
+		//generateWorld("res/World/world.txt");
+		
+		// loads the world and sets the players position.
 		loadWorld(path);
 		entity_manager.getPlayer().setX(spawn_x);
 		entity_manager.getPlayer().setY(spawn_y);
 	}
 	
-	public void tick() {
+	public void tick() { // ticks the item and entity manager
 		item_manager.tick();
 		entity_manager.tick();
 	}
 	
 	public void render(Graphics g) {
 		
+		// prevents the game loading every single tile at once.
 		int x_start = (int) Math.max(0, handler.getGameCamera().getX_offset() / Tile.TILEWIDTH);
 		int y_start = (int) Math.max(0, handler.getGameCamera().getY_offset() /Tile.TILEHEIGHT);
 		
 		int x_end = (int) Math.min(width, (handler.getGameCamera().getX_offset() + handler.getWidth()) / Tile.TILEWIDTH+1);
 		int y_end = (int) Math.min(height, (handler.getGameCamera().getY_offset() + handler.getHeight()) / Tile.TILEHEIGHT+1);
+		
+		// renders each tile
 		for (int y = y_start; y < y_end;y++){
 			for (int x = x_start; x < x_end;x++) {
 				getTile(x,y).render(g, (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getX_offset()),
@@ -74,6 +83,7 @@ public class World {
 	}
 	
 	public Tile getTile(int x,int y) {
+		// returns a tile at an x and y coordinate, and returna a grass tile if out of the game bounds and returns a missing texture tile of the tile grabed is null.
 		if ( x < 0 || y < 0 || x >= width|| y>= height){
 			return Tile.grass_tile;
 		}
@@ -85,7 +95,7 @@ public class World {
 	}
 	
 
-	private void generateWorld(String path) {
+	private void generateWorld(String path) { // generates the world (when i want to add changes), automatically!
 		Random rand = new Random();
 		String brick;
 		try {
@@ -445,19 +455,26 @@ public class World {
 		
 		
 	}
+	
 	private void loadWorld(String path){
+		// takes a file converts it into a string, then takes the string splits it into an array and each entry is decided by spaces
 		String file = Utils.loadFileAsString(path);
 		String[] tokens = file.split("\\s+");
 
+		// gets the width and height of the world by looking at the first two data entries
 		width = Utils.parseInt(tokens[0]);
 		height = Utils.parseInt(tokens[1]);
 		
+		// gets the spawn_x y for the player. and multiplies them by the tile size
 		spawn_x = Utils.parseInt(tokens[2]);
 		spawn_y = Utils.parseInt(tokens[3]);
-		
 		spawn_x *= Tile.TILEWIDTH;
 		spawn_y *= Tile.TILEHEIGHT;
+		
+		// creates a new multidimensional int array at the dimensions of the world 
 		tiles = new int[width][height];
+		
+		// enters each tile code into the array from the tokena array
 		for (int y = 0;y < height; y++) {
 			for (int x = 0;x < width; x++) {
 				tiles[x][y] = Utils.parseInt(tokens[(x+y*width) + 4]);
@@ -465,6 +482,8 @@ public class World {
 		}
 	}
 
+	
+	// getters and setters
 	public int getWidth() {
 		return width;
 	}

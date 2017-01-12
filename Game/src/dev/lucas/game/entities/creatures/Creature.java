@@ -6,15 +6,17 @@ import dev.lucas.game.tiles.Tile;
 
 public abstract class Creature extends Entity {
 
-	
+	// Sets some final values necessary for momentum and size.
 	public static final float MAX_SPEED = 7.5f;
 	public static final float SPEED_CHANGE = 0.2f;
 	public static final int DEFAULT_CREATURE_WIDTH = 64,
 							DEFAULT_CREATURE_HEIGHT = 64;
 	
+	// for movement
 	protected float speed;
 	protected float xMove, yMove;
 	
+	// the Class Constructor, passes what it recieves to the super constructor and sets variables 'speed', 'xMove', 'yMove' to 0.
 	public Creature(Handler handler,float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
 		speed = 0;
@@ -23,7 +25,7 @@ public abstract class Creature extends Entity {
 	}
 
 	public void move() {
-		
+		// Checks if the entity will collide with any other entity before it moves
 		if (!checkEntityCollisions(xMove,0f)) {
 			moveX();	
 		}
@@ -33,8 +35,12 @@ public abstract class Creature extends Entity {
 	}
 	
 	public void moveX() {
+		// Checks which direction the entity is moving
+		// gets the tile position the player is moving in or to and checks if it is solid or not.
+			// If solid it sets the entities position equal to the tile before the solid tile.
+			// Else it allows the entity to move in the direction
+		
 		if (xMove > 0) { // Moving right
-			
 			int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
 			if (!collisionWithTile(tx, (int)( y + bounds.y)/Tile.TILEHEIGHT) &&
 					!collisionWithTile(tx,(int)( y + bounds.y + bounds.height)/Tile.TILEHEIGHT)) {
@@ -60,6 +66,10 @@ public abstract class Creature extends Entity {
 	}
 	
 	public void moveY() {
+		// Checks which direction the entity is moving
+		// gets the tile position the player is moving in or to and checks if it is solid or not.
+			// If solid it sets the entities position equal to the tile before the solid tile.
+			// Else it allows the player to move in the direction
 		if (yMove< 0){ // Moving Up
 			
 			int ty = (int) (y + yMove + bounds.y)/ Tile.TILEHEIGHT;
@@ -86,6 +96,7 @@ public abstract class Creature extends Entity {
 	}
 	
 	protected boolean collisionWithTile(int x, int y) {
+		// Checks the Tiles property solid
 		return handler.getWorld().getTile(x, y).isSolid();
 	}
 
