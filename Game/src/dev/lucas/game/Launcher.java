@@ -15,6 +15,8 @@ public class Launcher {
 		int width = gd.getDisplayMode().getWidth();
 		int height = gd.getDisplayMode().getHeight();
 		
+		System.out.println(width + "  " + height);
+		
 		Game game = new Game("Tile Game!",width-2,height-20);
 		game.start();
 	}

@@ -15,6 +15,11 @@ import dev.lucas.game.items.ItemManager;
 import dev.lucas.game.tiles.Tile;
 import dev.lucas.game.utils.Utils;
 
+/** 
+ * <i><b>World</b></i>
+ * <pre> public class World</pre>
+ * <p>This class defines all the necessary methods and variables for a World</p>
+ * **/
 public class World {
 	
 	// Initializes some private int's and a private Handler
@@ -31,6 +36,16 @@ public class World {
 	private ItemManager item_manager;
 	
 	// Constructor for the World, needs a handler and a path.
+	/**
+	 * <i><b> World</b></i>
+	 * <pre>	public World(Handler handler, 
+	 *                      String path)</pre>
+	 * <p>The class constructor saves the parsed handler, creates a new entity and Item manager as well as a new Player. It then loads the world and sets the Players x and y 
+	 * coordinates.</p>
+	 * @param Handler handler,
+	 * @param String path
+	 * @see {@link dev.lucas.game.Handler Handler} , {@link dev.lucas.game.entities.EntityManager EntityManager} , {@link dev.lucas.game.entities.creatures.Player Player} , {@link dev.lucas.game.items.ItemManager ItemManager}
+	 * **/
 	public World (Handler handler, String path) {
 		this.handler = handler;
 		
@@ -52,11 +67,27 @@ public class World {
 		entity_manager.getPlayer().setY(spawn_y);
 	}
 	
+	/**
+	 * <i><b>tick</b></i>
+	 * <pre>	public void tick()</pre>
+	 * <p>This method ticks the ItemManager and EntityManager.</p>
+	 * @param None
+	 * @return void
+	 * @see {@link dev.lucas.game.entities.EntityManager EntityManager} , {@link dev.lucas.game.items.ItemManager ItemManager}
+	 * **/
 	public void tick() { // ticks the item and entity manager
 		item_manager.tick();
 		entity_manager.tick();
 	}
 	
+	/**
+	 * <i><b>render</b></i>
+	 * <pre>	public void render(Graphics g)</pre>
+	 * <p>This method renders the viewable part of the world as well as the ItemManager and the EntityManager.</p>
+	 * @param
+	 * @return void
+	 * @see {@link dev.lucas.game.entities.EntityManager EntityManager} , {@link dev.lucas.game.items.ItemManager ItemManager} , {@link dev.lucas.game.gfx.GameCamera GameCamera} , {@link dev.lucas.game.tiles.Tile Tile}
+	 * **/
 	public void render(Graphics g) {
 		
 		// prevents the game loading every single tile at once.
@@ -82,6 +113,16 @@ public class World {
 		entity_manager.render(g);
 	}
 	
+	/**
+	 * <i><b>getTile</b></i>
+	 * <pre>	public Tile getTile(int x, 
+	 *                            int y)</pre>
+	 * <p>This method returns a tile at a specific x, y coordinate. It returns a Grass tile if the x and y coordinates are out of world bounds and returns a Missing tile if the tile
+	 *  type does not exist.</p>
+	 * @param
+	 * @return Tile
+	 * @see {@link dev.lucas.game.tiles.Tile}
+	 * **/
 	public Tile getTile(int x,int y) {
 		// returns a tile at an x and y coordinate, and returna a grass tile if out of the game bounds and returns a missing texture tile of the tile grabed is null.
 		if ( x < 0 || y < 0 || x >= width|| y>= height){
@@ -95,6 +136,14 @@ public class World {
 	}
 	
 
+	/**
+	 * <i><b>generateWorld</b></i>
+	 * <pre>	public void generateWorld(String path)</pre>
+	 * <p>This method generates a world by custom coordinates. This is a developer tool only (i.e. USE AT OWN RISK).</p>
+	 * @param
+	 * @return void
+	 * **/
+	@SuppressWarnings("unused")
 	private void generateWorld(String path) { // generates the world (when i want to add changes), automatically!
 		Random rand = new Random();
 		String brick;
@@ -456,6 +505,15 @@ public class World {
 		
 	}
 	
+	/**
+	 * <i><b>loadWorld</b></i>
+	 * <pre>	public void loadWorld(String path)</pre>
+	 * <p>This method load a file from the parsed String as a path. It then convert the file into a String and then into a String Array. Each index value is made when 
+	 * ever there is a space in the file. It then enters each of the String array values into a multidimensional Array.</p>
+	 * @param
+	 * @return void
+	 * @see {@link dev.lucas.game.utils.Utils Utils}, {@link dev.lucas.game.tiles.Tile Tile}
+	 * **/
 	private void loadWorld(String path){
 		// takes a file converts it into a string, then takes the string splits it into an array and each entry is decided by spaces
 		String file = Utils.loadFileAsString(path);
@@ -474,7 +532,7 @@ public class World {
 		// creates a new multidimensional int array at the dimensions of the world 
 		tiles = new int[width][height];
 		
-		// enters each tile code into the array from the tokena array
+		// enters each tile code into the array from the tokens array
 		for (int y = 0;y < height; y++) {
 			for (int x = 0;x < width; x++) {
 				tiles[x][y] = Utils.parseInt(tokens[(x+y*width) + 4]);
@@ -484,30 +542,84 @@ public class World {
 
 	
 	// getters and setters
+	/**
+	 * <i><b>getWidth</b></i>
+	 * <pre>	public int getWidth()</pre>
+	 * <p>Gets the width of the world.</p>
+	 * @param None
+	 * @return int
+	 * **/
 	public int getWidth() {
 		return width;
 	}
 
+	/**
+	 * <i><b>getHeight</b></i>
+	 * <pre>	public int getHeight()</pre>
+	 * <p>Gets the height of the world.</p>
+	 * @param None
+	 * @return int
+	 * **/
 	public int getHeight() {
 		return height;
 	}
 
+	/**
+	 * <i><b>getEntity_manager</b></i>
+	 * <pre>	public EntityManager getEntity_manager()</pre>
+	 * <p>Gets the EntityManager.</p>
+	 * @param None
+	 * @return EntityManager
+	 * @see {@link dev.lucas.game.entities.EntityManager EntityManager}
+	 * **/
 	public EntityManager getEntity_manager() {
 		return entity_manager;
 	}
 
+	/**
+	 * <i><b>getHandler</b></i>
+	 * <pre>	public Handler getHandler()</pre>
+	 * <p>Gets the handler.</p>
+	 * @param None
+	 * @return Handler
+	 * @see {@link dev.lucas.game.Handler Handler}
+	 * **/
 	public Handler getHandler() {
 		return handler;
 	}
 
+	/**
+	 * <i><b>setHandler</b></i>
+	 * <pre>	public void setHandler(Handler handler)</pre>
+	 * <p>Sets the Handler.</p>
+	 * @param
+	 * @return void
+	 * @see {@link dev.lucas.game.Handler Handler}
+	 * **/
 	public void setHandler(Handler handler) {
 		this.handler = handler;
 	}
 
+	/**
+	 * <i><b>getItem_manager</b></i>
+	 * <pre>	public ItemManager getItem_manager()</pre>
+	 * <p>Gets the ItemManager.</p>
+	 * @param None
+	 * @return ItemManager
+	 * @see {@link dev.lucas.game.items.ItemManager ItemManager}
+	 * **/
 	public ItemManager getItem_manager() {
 		return item_manager;
 	}
 
+	/**
+	 * <i><b>setItem_manager</b></i>
+	 * <pre>	public void setItem_manager(ItemManager item_manager)</pre>
+	 * <p>Sets the ItemManager.</p>
+	 * @param
+	 * @return void
+	 * @see {@link dev.lucas.game.items.ItemManager ItemManager}
+	 * **/
 	public void setItem_manager(ItemManager item_manager) {
 		this.item_manager = item_manager;
 	}

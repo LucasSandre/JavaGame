@@ -4,6 +4,12 @@ import dev.lucas.game.Handler;
 import dev.lucas.game.entities.Entity;
 import dev.lucas.game.tiles.Tile;
 
+/** 
+ * <i><b>Projectile</b></i>
+ * <pre> public class Projectile extends Entity</pre>
+ * <p>This class defines all the necessary methods and variables for (a/an) Projectile</p>
+ * @see {@link dev.lucas.game.entities.Entity Entity}
+ * **/
 public abstract class Projectile extends Entity {
 
 	// Some statics for speed control and projectile size.
@@ -16,6 +22,22 @@ public abstract class Projectile extends Entity {
 	protected double direction;
 	
 	// The Class Constructor
+	/**
+	 * <i><b> Projectile</b></i>
+	 * <pre>	public Projectile(Handler handler,
+	 *                            float x,
+	 *                            float y,
+	 *                            int width,
+	 *                            int height)</pre>
+	 * <p>The class constructor takes in the parsed values and passes them to the super constructor. It sets the default speed of the Projectile,
+	 *  sets its xMove and yMove to 0 as well as its direction.</p>
+	 * @param Handler handler,
+	 * @param Float x,
+	 * @param Float y,
+	 * @param Int width,
+	 * @param Int height
+	 * @see {@link dev.lucas.game.Handler Handler}
+	 * **/
 	public Projectile(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);
 		projectile_speed = SPEED;
@@ -24,6 +46,26 @@ public abstract class Projectile extends Entity {
 		this.direction = 0;
 	}
 
+	/**
+	 * <i><b>update</b></i>
+	 * <pre>	public void update()</pre>
+	 * <p>This methods updates the Projectiles xMove and yMove variables.</p>
+	 * @param None
+	 * @return void
+	 * **/
+	public void update() {
+		// updates the projectiles movement variables.
+		proj_xMove = (float) (projectile_speed * Math.cos(direction));
+		proj_yMove = (float) (projectile_speed * Math.sin(direction));
+	}
+	
+	/**
+	 * <i><b>move</b></i>
+	 * <pre>	public void move()</pre>
+	 * <p>This method sees if it should move the Projectile.</p>
+	 * @param None
+	 * @return void
+	 * **/
 	public void move() {
 		// When Called It checks if it collided with any Entity
 			// If True, damages entity and kills the projectile
@@ -36,6 +78,14 @@ public abstract class Projectile extends Entity {
 		}
 	}
 	
+	/**
+	 * <i><b>moveX</b></i>
+	 * <pre>	public void moveX()</pre>
+	 * <p>This method checks to see how it should move the Projectile in the x dimension.</p>
+	 * @param None
+	 * @return void
+	 * @see {@link dev.lucas.game.entities.tiles.Tile Tile}
+	 * **/
 	public void moveX() {
 		// Checks which direction the entity is moving
 				// gets the tile position the player is moving in or to and checks if it is solid or not.
@@ -65,14 +115,16 @@ public abstract class Projectile extends Entity {
 			}
 			
 		}
-	}
+	}	
 	
-	private boolean collisionWithTile(int x, int y) {
-		// returns the tile at the x,y co-ords and returns the is solid value.
-		return handler.getWorld().getTile(x, y).isSolid();
-	}
-	
-	
+	/**
+	 * <i><b>moveY</b></i>
+	 * <pre>	public void moveY()</pre>
+	 * <p>This method checks to see how it should move the Projectile in the y dimension.</p>
+	 * @param None
+	 * @return void
+	 * @see {@link dev.lucas.game.entities.tiles.Tile Tile}
+	 * **/
 	public void moveY() {
 		// Checks which direction the entity is moving
 				// gets the tile position the player is moving in or to and checks if it is solid or not.
@@ -104,28 +156,83 @@ public abstract class Projectile extends Entity {
 		}
 	}
 	
+	/**
+	 * <i><b>collisionWithTile</b></i>
+	 * <pre>	public boolean collisionWithTile(int x, int y)</pre>
+	 * <p>This method checks to see if the tile stored in the x and y position is solid.</p>
+	 * @param
+	 * @return boolean
+	 * @see {@link dev.lucas.game.entities.tiles.Tile Tile}
+	 * **/
+	private boolean collisionWithTile(int x, int y) {
+		// returns the tile at the x,y co-ords and returns the is solid value.
+		return handler.getWorld().getTile(x, y).isSolid();
+	}
+	
 	// Getters & Setters
 
+	/**
+	 * <i><b>getProjectile_speed</b></i>
+	 * <pre>	public float getProjectile_speed()</pre>
+	 * <p>Gets the projectile's speed.</p>
+	 * @param None
+	 * @return float
+	 * **/
 	public float getProjectile_speed() {
 		return projectile_speed;
 	}
 
+	/**
+	 * <i><b>setProjectile_speed</b></i>
+	 * <pre>	public void setProjectile_speed(float projectile_speed)</pre>
+	 * <p>Sets the Projectile's speed.</p>
+	 * @param
+	 * @return void
+	 * **/
 	public void setProjectile_speed(float projectile_speed) {
 		this.projectile_speed = projectile_speed;
 	}
 
+	/**
+	 * <i><b>getProj_xMove</b></i>
+	 * <pre>	public float getProj_xMove()</pre>
+	 * <p>Gets the Projectile's xMove variable.</p>
+	 * @param None
+	 * @return float
+	 * **/
 	public float getProj_xMove() {
 		return proj_xMove;
 	}
 
+	/**
+	 * <i><b>setProj_xMove</b></i>
+	 * <pre>	public void setProj_xMove(float proj_xMove)</pre>
+	 * <p>Sets the Projectile's xMove variable.</p>
+	 * @param
+	 * @return void
+	 * **/
 	public void setProj_xMove(float proj_xMove) {
 		this.proj_xMove = proj_xMove;
 	}
 
+	/**
+	 * <i><b>getProj_yMove</b></i>
+	 * <pre>	public float getProj_yMove()</pre>
+	 * <p>Gets the Projectile's yMove variable.</p>
+	 * @param None
+	 * @return float
+	 * **/
 	public float getProj_yMove() {
 		return proj_yMove;
 	}
 
+	/**
+	 * <i><b>setProj_yMove</b></i>
+	 * <pre>	public void setProj_yMove(float proj_yMove)</pre>
+	 * <p>Sets the Projectile's yMove variable.</p>
+	 * @param
+	 * @return void
+	 * **/
 	public void setProj_yMove(float proj_yMove) {
 		this.proj_yMove = proj_yMove;
 	}

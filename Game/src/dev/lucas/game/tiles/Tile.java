@@ -6,6 +6,11 @@ import java.awt.image.BufferedImage;
 import dev.lucas.game.tiles.brickwall.*;
 import dev.lucas.game.tiles.grass.*;
 
+/** 
+ * <i><b>Tile</b></i>
+ * <pre> public class Tile</pre>
+ * <p>This class defines all the necessary methods and variables for a Tile.</p>
+ * **/
 public class Tile {
 	
 	// Static Variables here, creates Tile variables. tiles array holds every type of tile.
@@ -71,7 +76,15 @@ public class Tile {
 	protected final int id;
 	
 	// Tile Constructor takes in an image and an int. After it stores the values and adds the new tile to the tiles array @ index 'id'
-	public Tile(BufferedImage texture,int id) {
+	/**
+	 * <i><b> Tile</b></i>
+	 * <pre>	public Tile(BufferedImage texture,
+	 *                              int id)</pre>
+	 * <p>The class constructor saves the parsed values and sets the location of the new tile in the tiles array equal to its ID.</p>
+	 * @param BufferedImage texture,
+	 * @param Int id
+	 * **/
+	public Tile(BufferedImage texture, int id) {
 		this.texture = texture;
 		this.id = id;
 		
@@ -79,21 +92,50 @@ public class Tile {
 	}
 
 	// NOt implemented but animated and intractable tiles could be included.
+	/**
+	 * <i><b>tick</b></i>
+	 * <pre>	public void tick()</pre>
+	 * <p>This method is not currently used but could be used for animated and or intractable tiles.</p>
+	 * @param None
+	 * @return void
+	 * **/
 	public void tick () {
 		
 	}
 	
 	// Draws the tile with its texture
+	/**
+	 * <i><b>render</b></i>
+	 * <pre>	public void render()</pre>
+	 * <p>This method renders the tile in the world.</p>
+	 * @param
+	 * @return void
+	 * @see {@link dev.lucas.game.worlds.World World}
+	 * **/
 	public void render(Graphics g, int x, int y) {
 		g.drawImage(texture, x, y, TILEWIDTH, TILEHEIGHT, null);
 		
 	}
 	
 	// Getters
+	/**
+	 * <i><b>getId</b></i>
+	 * <pre>	public int getId()</pre>
+	 * <p>This method returns the Tile's id.</p>
+	 * @param None
+	 * @return int
+	 * **/
 	public int getId() {
 		return id;
 	}
 	
+	/**
+	 * <i><b>isSolid</b></i>
+	 * <pre>	public boolean isSolid()</pre>
+	 * <p>This method returns a default false unless the method is overridden.</p>
+	 * @param
+	 * @return boolean
+	 * **/
 	public boolean isSolid() {
 		return false;
 	}

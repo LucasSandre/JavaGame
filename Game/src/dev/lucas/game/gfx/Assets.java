@@ -4,6 +4,11 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+/** 
+ * <i><b>Assets</b></i>
+ * <pre> public class Assets</pre>
+ * <p>This class gets all the resources needed for the Game.</p>
+ * **/
 public class Assets {
 
 	// Initializes private width and height variables to the resolution of the spites inside each sprite_map.
@@ -42,8 +47,16 @@ public class Assets {
 	public static FontMetrics[] font_10_fm = new FontMetrics[3], font_11_fm, font_12_fm, font_14_fm,
 	                            font_18_fm, font_24_fm, font_30_fm, font_32_fm;
 	
-	public static void init(Graphics g) {
-		
+	
+	/**
+	 * <i><b>init</b></i>
+	 * <pre>	public void init(Graphics g)</pre>
+	 * <p>This method sets all the necessary graphics variables (e.g. sprites, fonts, font metrics, tile images, UI images).</p>
+	 * @param
+	 * @return void
+	 * @see {@link dev.lucas.game.gfx.SpriteSheet SpriteSheet} , {@link dev.lucas.game.ImageLoader ImageLoader} , {@link dev.lucas.game.FontLoader FontLoader}
+	 * **/
+	public static void init(Graphics g) {	
 		// Get Sheet files
 		
 		SpriteSheet entity_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/EntitySheet.png"));

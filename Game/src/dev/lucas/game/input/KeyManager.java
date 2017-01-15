@@ -3,6 +3,11 @@ package dev.lucas.game.input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/** 
+ * <i><b>KeyManager</b></i>
+ * <pre> public class KeyManager implements KeyListner</pre>
+ * <p>This KeyManager class manages all important keyboard input.</p>
+ * **/
 public class KeyManager implements KeyListener {
 	// Implements KeyListener Methods to detect key input
 	
@@ -13,6 +18,12 @@ public class KeyManager implements KeyListener {
 	
 	// The Class Constructor
 		// creates the arrays
+	/**
+	 * <i><b> KeyManager</b></i>
+	 * <pre>	public KeyManager()</pre>
+	 * <p>The class constructor creates three the three necessary arrays to allow toggle keys and regular input.</p>
+	 * @param None
+	 * **/
 	public KeyManager() {
 		keys = new boolean[256];
 		just_pressed = new boolean[keys.length];
@@ -20,6 +31,13 @@ public class KeyManager implements KeyListener {
 	}
 	
 	
+	/**
+	 * <i><b>tick</b></i>
+	 * <pre>	public void tick()</pre>
+	 * <p>This method keeps track of all the keys that are being pressed, just been pressed and ones that can't be pressed.</p>
+	 * @param None
+	 * @return void
+	 * **/
 	public void tick(){
 		// Updates variables
 		
@@ -44,9 +62,17 @@ public class KeyManager implements KeyListener {
 		up = keys[KeyEvent.VK_W];
 		down = keys[KeyEvent.VK_S];
 		left = keys[KeyEvent.VK_A];
-		right = keys[KeyEvent.VK_D];
-		
+		right = keys[KeyEvent.VK_D];	
 	}
+	
+	/**
+	 * <i><b>keyPressed</b></i>
+	 * <pre>	public void keyPressed(KeyEvent e)</pre>
+	 * <p>This method is called when a key is pressed. This method checks to see if the key code value of the key that was just pressed is in between the bounds of the keys 
+	 * array and uses the key code as a index of the array and sets that index to true.</p>
+	 * @param
+	 * @return can return null if the key code of the key that is pressed does not follow the rule 0 > key code < 256. 
+	 * **/
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() < 0 || e.getKeyCode() > keys.length) {
@@ -55,6 +81,14 @@ public class KeyManager implements KeyListener {
 		keys[e.getKeyCode()] = true;
 	}
 
+	/**
+	 * <i><b>keyReleased</b></i>
+	 * <pre>	public void keyReleased(KeyEvent e)</pre>
+	 * <p>This method is called when a key is released. This method checks if the key code value of the key pressed is between the bounds of the keys array. and uses the key 
+	 * code as a index of the array and sets that index to true.</p>
+	 * @param
+	 * @return can return null if the key code of the key that is released does not follow the rule 0 > key code < 256. 
+	 * **/
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() < 0 || e.getKeyCode() > keys.length) {
@@ -64,12 +98,29 @@ public class KeyManager implements KeyListener {
 		
 	}
 
+	/**
+	 * <i><b>keyTyped</b></i>
+	 * <pre>	public void keyTyped(KeyEvent e)</pre>
+	 * <p>This method is called if the key pressed generated a unicode value. This method is unused.</p>
+	 * @param
+	 * @return None 
+	 * **/
 	@Override
 	public void keyTyped(KeyEvent e) {
 		
 		
 	}
-	public boolean keyJustPressed(int keyCode){
+	
+	/**
+	 * <i><b>keyJustPressed</b></i>
+	 * <pre>	public boolean keyJustPressed(int keyCode)</pre>
+	 * <p>This method checks if the key code parsed in to the method is between 0 and the length of the keys array. Then it returns the value at the index of the key code 
+	 * in the just_pressed array</p>
+	 * @param
+	 * @return boolean
+	 * @see {@link dev.lucas.game.input}
+	 * **/
+	public boolean keyJustPressed(int keyCode) {
 		if(keyCode < 0 || keyCode >= keys.length){
 			return false;
 		}

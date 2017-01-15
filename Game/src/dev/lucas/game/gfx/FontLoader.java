@@ -6,6 +6,11 @@ import java.awt.Graphics;
 import java.io.InputStream;
 
 
+/** 
+ * <i><b>FontLoader</b></i>
+ * <pre> public class FontLoader</pre>
+ * <p>FontLoader is a utility class for fonts.</p>
+ * **/
 public class FontLoader {
 
 	// Initializes private static arrays and Variables with types Font, InputStream, and Font metrics.
@@ -14,6 +19,14 @@ public class FontLoader {
 	private static FontMetrics[] fm ;
 
 	
+	/**
+	 * <i><b>loadFont</b></i>
+	 * <pre>	public static Font[] loadFont(String path,
+	 *                                  int size)</pre>
+	 * <p>This method grabs a font file, creates 3 versions of that font, (e.g. italics, bold, basic) at the parsed size.</p>
+	 * @param
+	 * @return Font[]
+	 * **/
 	public static Font[] loadFont(String path, int size) {
 		// Creates a font array to size 3
 		font = new Font[3];
@@ -42,6 +55,15 @@ public class FontLoader {
 		}
 		return font;
 	}
+	
+	/**
+	 * <i><b>loadFontMetrics</b></i>
+	 * <pre>	public static FontMetrics[] loadFontMetrics(Graphics g,
+	 *                                               Font[] font)</pre>
+	 * <p>This method used the parsed values to create a FontMetrics array, that has each one of the states (e.g. italics, bold, basic).</p>
+	 * @param
+	 * @return FontMetrics[]
+	 * **/
 	public static FontMetrics[] loadFontMetrics(Graphics g, Font[] font) {
 		// Creates the font metrics from a font parsed into the method and returns a FontMetrics Array.
 		fm = new FontMetrics[3];

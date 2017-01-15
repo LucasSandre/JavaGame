@@ -1,6 +1,7 @@
 package dev.lucas.game;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
 import dev.lucas.game.display.Display;
@@ -14,22 +15,26 @@ import dev.lucas.game.states.State;
 
 /** 
  * <h1>Game</h1>
+ * <pre>	public class Game implements Runnable</pre>
  * <p>This class runs the entirety of the Game.</p>
  * <h2>Controls:</h2>
  * <pre>
  *  <h3>Keyboard:</h3>
- *  	W = up
- *  	A = left
- *  	S = down
- *  	D = right
- *  	E = Inventory Toggle
+ *  	W 	  = up
+ *  	A     = left
+ *  	S     = down
+ *  	D     = right
+ *  	E	  = Inventory Toggle
+ *  	Shift = Debug Toggle
  *  <h3>Mouse:</h3>
  *  	Left Click = Attack | Select
  *  	Right Click = Interact
  *  </pre>
- *  @author Lucas Sandre, Ethan Coad, Marcus Blauner
+ *  @author Lucas Sandre	- The Dev & Co-Artist
+ *  @author Ethan Coad 		- The Co-Dev & Co-Artist
+ *  @author Marcus Blauner	- The Artist
  *  @version Beta 1.0
- *  @see {@link dev.lucas.game.Launcher}
+ *  @see {@link dev.lucas.game.Launcher Launcher}
  * **/
 public class Game implements Runnable{
 	
@@ -38,7 +43,7 @@ public class Game implements Runnable{
 	private int width,height;
 	public String title;
 	
-	
+	private boolean debug = false;
 	private boolean running = false;
 	private Thread thread;
 	
@@ -63,12 +68,14 @@ public class Game implements Runnable{
 	// Game constructor sets the width and height and title variables to what it is given and activates the key and mouse managers
 	/**
 	 * <i><b>Game</b></i>
-	 * <pre>	public Game(String title, int width, int height)</pre>
+	 * <pre>	public Game(String title,
+	 *                       int width,
+	 *                       int height)</pre>
 	 * <p>The game constructor saves the values passed into it and creates the key and mouse managers.</p>
 	 * @param String title 	- Sets the title of the window.
 	 * @param Int width		- Sets the width of the window.
 	 * @param Int height	- Sets the height of the window.
-	 * @see {@link dev.lucas.game.input.KeyManager} , {@link dev.lucas.game.input.MouseManager}
+	 * @see {@link dev.lucas.game.input.KeyManager KeyManager} , {@link dev.lucas.game.input.MouseManager MouseManager}
 	 * **/
 	public Game(String title, int width, int height) {
 		this.width = width;
@@ -84,8 +91,8 @@ public class Game implements Runnable{
 	 * creates a graphics object from the display object, runs the init method from the Assets class, creates the handler and passes graphics variable g,
 	 * creates the Game Camera and passes the handler and two 0's, creates the states, and finally runs the setState method from the State Class.</p>
 	 * @param None
-	 * @see {@link dev.lucas.game.input.KeyManager} , {@link dev.lucas.game.input.MouseManager}, {@link dev.lucas.game.states.State} , {@link dev.lucas.game.states.GameState} , {@link dev.lucas.game.states.MenuState} , 
-	 * @see {@link dev.lucas.game.Display} , {@link dev.lucas.game.gfx.Assets} , {@link dev.lucas.game.gfx.GameCamera} , {@link dev.lucas.game.Handler}
+	 * @see {@link dev.lucas.game.input.KeyManager  KeyManager} , {@link dev.lucas.game.input.MouseManager MouseManager}, {@link dev.lucas.game.states.State State} , {@link dev.lucas.game.states.GameState GameState} , {@link dev.lucas.game.states.MenuState MenuState} , 
+	 * @see {@link dev.lucas.game.Display Display} , {@link dev.lucas.game.gfx.Assets Assets} , {@link dev.lucas.game.gfx.GameCamera GameCamera} , {@link dev.lucas.game.Handler Handler}
 	 * **/
 	private void init() {
 		// called after start method
@@ -124,11 +131,16 @@ public class Game implements Runnable{
 	 * <p>The tick method calls the tick method of the key_manager. It also checks if the current_state variable from the State class has a value.
 	 *  If it does it ticks the current state </p>
 	 *  @param None
-	 *  @see {@link dev.lucas.game.input.KeyManager}, {@link dev.lucas.game.states.State}
+	 *  @see {@link dev.lucas.game.input.KeyManager KeyManager}, {@link dev.lucas.game.states.State State}
 	 * **/
 	private void tick(){
 		// ticks the key manager and if the state is not null, it ticks the current state.
 		key_manager.tick();
+		
+		// Checks to see if shift was just pressed
+		if (key_manager.keyJustPressed(KeyEvent.VK_SHIFT)) {
+			debug = !debug;
+		}
 		
 		if (State.getState() != null) 
 			State.getState().tick();
@@ -143,7 +155,7 @@ public class Game implements Runnable{
 	 *  stored in the State class. Finally it makes the next buffer visible then it disposes of the Graphics content. </p>
 	 *  @param None
 	 *  @return Null if there is no buffer strategy.
-	 *  @see {@link dev.lucas.game.display.Display}
+	 *  @see {@link dev.lucas.game.display.Display Display}
 	 *  **/
 	private void render() {
 		// gets the bufferstrategy and may create one if one does not already exist.
@@ -265,7 +277,7 @@ public class Game implements Runnable{
 	 * <p>Returns the KeyManager.</p>
 	 * @param none
 	 * @return KeyManager
-	 * @see {@link dev.lucas.game.input.KeyManager}
+	 * @see {@link dev.lucas.game.input.KeyManager KeyManager}
 	 * **/
 	public KeyManager getKeyManager() {
 		return key_manager;
@@ -277,7 +289,7 @@ public class Game implements Runnable{
 	 * <p>Returns the MouseManager.</p>
 	 * @param none
 	 * @return MouseManager
-	 * @see {@link dev.lucas.game.input.MouseManager}
+	 * @see {@link dev.lucas.game.input.MouseManager MouseManager}
 	 * **/
 	public MouseManager getMouseManager() {
 		return mouse_manager;
@@ -289,7 +301,7 @@ public class Game implements Runnable{
 	 * <p>Returns the GameCamera.</p>
 	 * @param none
 	 * @return GameCamera
-	 * @see {@link dev.lucas.game.gfx.GameCamera}
+	 * @see {@link dev.lucas.game.gfx.GameCamera GameCamera}
 	 * **/
 	public GameCamera getGameCamera() {
 		return game_camera;
@@ -316,7 +328,28 @@ public class Game implements Runnable{
 	public int getHeight() {
 		return height;
 	}
-
 	
+	/**
+	 * <i><b>isDebug</b></i>
+	 * <pre>	public boolean isDebug()</pre>
+	 * <p>Returns the debug variable.</p>
+	 * @param None
+	 * @return boolean
+	 * **/
+	public boolean isDebug() {
+		return debug;
+	}
+	
+	/**
+	 *<i><b>setDebug</b></i>
+	 *<pre>		public void setDebug (boolean debug)</pre>
+	 *<p>Sets the debug to the passed value</p>
+	 * @param debug
+	 * @return None
+	 * **/
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
 	
 }
