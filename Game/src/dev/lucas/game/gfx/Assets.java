@@ -35,8 +35,8 @@ public class Assets {
 								  attack_right_up, attack_left_up, attack_right, attack_left;
 	
 	public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
-	public static BufferedImage[] rainbow_proj;
-	public static BufferedImage[] start;
+	public static BufferedImage[] arrow, rainbow_proj;
+	public static BufferedImage[] start, heart, energy, mana_fire;
 	
 	
 	// Initializes public static Font arrays
@@ -111,12 +111,16 @@ public class Assets {
 		attack_left_down = new BufferedImage[13];
 		
 		start = new BufferedImage[2];
+		heart = new BufferedImage[2];
+		energy = new BufferedImage[2];
+		mana_fire = new BufferedImage[6];
 		
 		zombie_down = new BufferedImage[3];
 		zombie_left = new BufferedImage[3];
 		zombie_right = new BufferedImage[3];
 		zombie_up = new BufferedImage[3];
 		
+		arrow = new BufferedImage[3];
 		rainbow_proj = new BufferedImage[7];
 		
 		// For loops for animations
@@ -146,13 +150,29 @@ public class Assets {
 		for (int i = 0; i < 8; i++) {
 			player_still[i] = entity_sheet.crop(0, height * i, width, height);
 		}
+		
+		for (int i = 0; i < 3; i++) {
+			arrow[i] = proj_sheet.crop(width*i, 0, width, height);
+		}
+		
 		for (int i = 0; i < 7; i++) {
-			rainbow_proj[i] = proj_sheet.crop(width * i, 0, width, height);
+			rainbow_proj[i] = proj_sheet.crop(width * i, height*9, width, height);
 		}
 		
 		// importing the ui objects
+		
+		for (int i = 0; i < 6; i++) {
+			mana_fire[i] = ui_sheet.crop(width*i*2, height, width*2, height*2);
+		}
+		
 		start[0]        = ui_sheet.crop(0,0,width*2,height);  
 		start[1]        = ui_sheet.crop(width*2,0,width*2,height);
+		heart[0]		= ui_sheet.crop(0, height*3, width*2, height*2);
+		heart[1]		= ui_sheet.crop(width*2, height*3, width*2, height*2);
+		energy[0]		= ui_sheet.crop(width*4, height*3, width*2, height*2);
+		energy[1]		= ui_sheet.crop(width*6, height*3, width*2, height*2);
+		
+		
 		
 		// Tiles 
 		stone        = tile_sheet.crop(0, 0, width, height);

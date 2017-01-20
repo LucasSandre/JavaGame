@@ -120,7 +120,7 @@ public class Item {
 		// renders the item.
 		g.drawImage(texture, x, y, ITEMWIDTH, ITEMHEIGHT, null);
 		if (handler.getGame().isDebug()) {
-			g.drawRect((int)(x - handler.getGameCamera().getX_offset()), (int) (y - handler.getGameCamera().getY_offset()), bounds.width, bounds.height);
+			g.drawRect(x, y, bounds.width, bounds.height);
 		}
 	}
 

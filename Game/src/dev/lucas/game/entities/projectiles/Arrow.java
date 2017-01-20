@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import dev.lucas.game.Handler;
 import dev.lucas.game.gfx.Animation;
 import dev.lucas.game.gfx.Assets;
+import dev.lucas.game.utils.Utils;
 
 /** 
  * <i><b>Arrow</b></i>
@@ -52,18 +53,20 @@ public class Arrow extends Projectile {
 	 * {@link dev.lucas.game.gfx.GameCamera GameCamera} , {@link dev.lucas.game.gfx.Assets Assets}
 	 *  **/
 	public Arrow(Handler handler, float x1, float y1, float x2, float y2, String sender) {
-		super(handler, x1, y1, Projectile.DEFAULT_PROJECTILE_WIDTH, Projectile.DEFAULT_PROJECTILE_HEIGHT);
-		bounds.x = 0;
-		bounds.y = 0;
-		bounds.width = 32;
-		bounds.height = 32;
+		super(handler, x1, y1, Projectile.DEFAULT_PROJECTILE_WIDTH *2, Projectile.DEFAULT_PROJECTILE_HEIGHT*2);
+		bounds.x = (int)(width*0.14);
+		bounds.y = (int)(height*0.2);
+		bounds.width = (int)(width/1.4);
+		bounds.height = (int)(height/2.0);
+		System.out.println(bounds.x + "   " + bounds.y);
+		System.out.println(bounds.width + "   " + bounds.height);
 		dmg = 2;
 		delta_x = (x2+ handler.getGameCamera().getX_offset())-x1;
 		delta_y = (y2+ handler.getGameCamera().getY_offset())-y1;
 		direction = (Math.atan2(delta_y,delta_x));
-		
+
 		// Animations
-		texture = new Animation(100,Assets.rainbow_proj);
+		texture = new Animation(100, Utils.rotateImages(Assets.arrow, direction));
 		this.sender = sender; 
 	}
 

@@ -57,6 +57,15 @@ public class Player extends Creature {
 	// Inventory
 	private Inventory inventory;
 	
+	// for health/energy access
+	public final int MAX_HEALTH = 100;
+	public final int MAX_ENERGY = 100;
+	
+	// For the players Energy/Mana
+	
+	public int energy = 100;
+	
+	
 	/** 
 	 * <i><b>Player</b></i>
 	 * <pre>	public Player(Handler handler,
@@ -73,6 +82,7 @@ public class Player extends Creature {
 	 * **/
 	public Player(Handler handler,float x, float y) {
 		super(handler,x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+		health = MAX_HEALTH;
 		bounds.x = 16;
 		bounds.y = 24;
 		bounds.width = 28;
@@ -103,6 +113,8 @@ public class Player extends Creature {
 		
 		// Creates the players inventory
 		inventory = new Inventory(handler);
+	
+		
 	}
 
 	/** 

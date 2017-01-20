@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
  * **/
 public class Animation {
 
-	// Initializes nessasary variables for an animation.
+	// Initializes necessary variables for an animation.
 	private int speed, index;
 	private long last_time;
 	private long timer = 0;
@@ -82,6 +82,17 @@ public class Animation {
 	}
 
 	/**
+	 *<i><b>setSpeed</b></i>
+	 *<pre>		public void setSpeed (int speed)</pre>
+	 *<p>Sets the speed to the passed value.</p>
+	 * @param speed
+	 * @return None
+	 * **/
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	/**
 	 * <i><b>getIndex</b></i>
 	 * <pre>	public int getIndex()</pre>
 	 * <p>Gets the index of the Animation.</p>
@@ -91,4 +102,16 @@ public class Animation {
 	public int getIndex() {
 		return index;
 	}
+
+	/**
+	 *<i><b>setIndex</b></i>
+	 *<pre>		public void setIndex (int index)</pre>
+	 *<p>Sets the index to the passed value.</p>
+	 * @param index
+	 * @return None
+	 * **/
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
 }

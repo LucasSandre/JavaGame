@@ -13,6 +13,9 @@ import dev.lucas.game.entities.statics.Boulder;
 import dev.lucas.game.entities.statics.Tree;
 import dev.lucas.game.items.ItemManager;
 import dev.lucas.game.tiles.Tile;
+import dev.lucas.game.ui.UIManager;
+import dev.lucas.game.ui.UIStatusEnergy;
+import dev.lucas.game.ui.UIStatusHeart;
 import dev.lucas.game.utils.Utils;
 
 /** 
@@ -35,6 +38,10 @@ public class World {
 	// For Items
 	private ItemManager item_manager;
 	
+	// For UI
+	
+	private UIManager ui_manager;
+	
 	// Constructor for the World, needs a handler and a path.
 	/**
 	 * <i><b> World</b></i>
@@ -50,6 +57,7 @@ public class World {
 		this.handler = handler;
 		
 		// Creates the managers.
+		ui_manager = new UIManager(handler);
 		entity_manager = new EntityManager(handler, new Player(handler , 100, 100));
 		item_manager = new ItemManager(handler);
 		
@@ -65,6 +73,10 @@ public class World {
 		loadWorld(path);
 		entity_manager.getPlayer().setX(spawn_x);
 		entity_manager.getPlayer().setY(spawn_y);
+		
+		// creates player specific UI Objects
+		ui_manager.addObject(new UIStatusHeart(handler, 0, 0, 64, 64));
+		ui_manager.addObject(new UIStatusEnergy(handler, 0, 64, 64, 64));
 	}
 	
 	/**
@@ -78,6 +90,7 @@ public class World {
 	public void tick() { // ticks the item and entity manager
 		item_manager.tick();
 		entity_manager.tick();
+		ui_manager.tick();
 	}
 	
 	/**
@@ -111,6 +124,10 @@ public class World {
 		// Entities
 		
 		entity_manager.render(g);
+		
+		// For the UI
+		
+		ui_manager.render(g);
 	}
 	
 	/**
@@ -623,4 +640,18 @@ public class World {
 	public void setItem_manager(ItemManager item_manager) {
 		this.item_manager = item_manager;
 	}
+
+	/**
+	 * <i><b>getUi_manager</b></i>
+	 * <pre>	public UIManager getUi_manager()</pre>
+	 * <p>Gets the world's UIManager</p>
+	 * @param None
+	 * @return UIManager
+	 * @see {@link dev.lucas.game.ui.UIManager UIManager}
+	 * **/
+	public UIManager getUi_manager() {
+		return ui_manager;
+	}
+	
+	
 }

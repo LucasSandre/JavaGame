@@ -33,23 +33,7 @@ public class MenuState extends State {
 		super(handler);
 		ui_manager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(ui_manager);
-		ui_manager.addObject(new UIImageButton(200,200,128,64,Assets.start,new ClickListener(){
-
-			@Override
-			public void onClick() {
-				State.setState(handler.getGame().game_state);
-			}
-		}));
-		ui_manager.addObject(new UIText(400,100,128,64,Assets.font_32[0], Color.cyan, "TEST", new ClickListener() {
-
-			
-			// this method gets called when the object is clicked on.
-			@Override
-			public void onClick() {
-				System.out.println("TEST");
-			}
-			
-		}));
+		init();
 	}
 
 	/**
@@ -81,5 +65,25 @@ public class MenuState extends State {
 	@Override
 	public void render(Graphics g) { // renders the Uimanager.
 		ui_manager.render(g);
+	}
+	
+	private void init() {
+		ui_manager.addObject(new UIImageButton(200,200,128,64,Assets.start,new ClickListener(){
+
+			@Override
+			public void onClick() {
+				State.setState(handler.getGame().game_state);
+			}
+		}));
+		ui_manager.addObject(new UIText(400,100,128,64,Assets.font_32[0], Color.cyan, "TEST", new ClickListener() {
+
+			
+			// this method gets called when the object is clicked on.
+			@Override
+			public void onClick() {
+				System.out.println("TEST");
+			}
+			
+		}));
 	}
 }

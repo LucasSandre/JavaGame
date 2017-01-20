@@ -75,7 +75,6 @@ public abstract class UIObject{
 	 * <p>This method checks to see if the mouse is currently over the UIObject and if so it sets the hovering variable to true. Else it sets the hovering variable to false</p>
 	 * @param
 	 * @return void
-	 * @see {@link dev.lucas.game.ui}
 	 * **/
 	public void onMouseMove(MouseEvent e) {
 		// Checks if the mouse is currently over the object

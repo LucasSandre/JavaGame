@@ -11,13 +11,15 @@ public class Launcher {
 	
 	public static void main(String[] args) {
 	
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		int width = gd.getDisplayMode().getWidth();
-		int height = gd.getDisplayMode().getHeight();
 		
-		System.out.println(width + "  " + height);
+		//Uncommenting the following code and adding width and height for the game constructor makes the game width default to your screen size.
+		//GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		//int width = gd.getDisplayMode().getWidth();
+		//int height = gd.getDisplayMode().getHeight();
 		
-		Game game = new Game("Tile Game!",width-2,height-20);
+		//System.out.println(width + "  " + height);
+		
+		Game game = new Game("Tile Game!",1366,768);
 		game.start();
 	}
 
