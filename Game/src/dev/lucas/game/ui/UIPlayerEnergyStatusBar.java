@@ -4,9 +4,9 @@
 package dev.lucas.game.ui;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 import dev.lucas.game.Handler;
+import dev.lucas.game.gfx.Assets;
 
 /** 
  * <i><b>UIPlayerManaStatusBar</b></i>
@@ -16,22 +16,23 @@ import dev.lucas.game.Handler;
  * **/
 public class UIPlayerEnergyStatusBar extends UIObject{
 
-	private BufferedImage[] texture;
 	private Handler handler;
 	private int player_energy;
 	private int bar_index;
+	private float factorx, factory;
 	
 	/**
 	 * <i><b> UIPlayerManaStatusBar</b></i>
 	 * <pre>	public UIPlayerManaStatusBar()</pre>
-	 * <p></p>
+	 * <p>The class constructor passes the x, y, width, and height values to the super constructor and saves the max value and handler.</p>
 	 * @param
-	 * @see {@link dev.lucas.game.ui}
+	 * @see {@link dev.lucas.game.Handler Handler}
 	 * **/
-	public UIPlayerEnergyStatusBar(Handler handler, float x, float y, int width, int height, BufferedImage[] texture) {
+	public UIPlayerEnergyStatusBar(Handler handler, float x, float y, int width, int height) {
 		super(x, y, width, height);
 		this.handler = handler;
-		this.texture = texture;
+		this.factorx = width/Assets.bar_holder.getWidth();
+		this.factory = height/Assets.bar_holder.getHeight();
 	}
 
 	/**
@@ -39,13 +40,12 @@ public class UIPlayerEnergyStatusBar extends UIObject{
 	 * <pre>	public void tick()</pre>
 	 * <p>This tick method updates the bars variables</p>
 	 * @param
-	 * @return 
-	 * @see {@link dev.lucas.game.ui}
+	 * @return
 	 * **/
 	@Override
 	public void tick() {
 		player_energy = handler.getWorld().getEntity_manager().getPlayer().energy;
-		bar_index = (int) (texture.length * ((float) (player_energy)/(float)(handler.getWorld().getEntity_manager().getPlayer().MAX_ENERGY)));	
+		bar_index = (int) Math.round(Assets.mana_bar.length * ((float) (player_energy)/(float)(handler.getWorld().getEntity_manager().getPlayer().MAX_ENERGY)))-1;	
 	}
 
 	/**
@@ -57,8 +57,9 @@ public class UIPlayerEnergyStatusBar extends UIObject{
 	 * **/
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Assets.bar_holder, x, y, width, height, null);
-		g.drawImage(Assets.mana_bar[bar_index], x, y, width, height, null);
+		g.drawImage(Assets.bar_holder, (int)x, (int)y, width, height, null);
+		g.drawImage(Assets.mana_bar[bar_index], (int)(x+(16*factorx)), (int)(y), (int)(Assets.health_bar[bar_index].getWidth()*factorx), (int)(height), null);
+		g.drawImage(Assets.bar_overlay, (int)x, (int)y, width, height, null);
 	}
 
 	/**

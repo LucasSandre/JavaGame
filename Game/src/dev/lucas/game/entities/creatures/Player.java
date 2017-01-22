@@ -4,6 +4,7 @@ package dev.lucas.game.entities.creatures;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -127,6 +128,13 @@ public class Player extends Creature {
 	 * **/
 	@Override
 	public void tick() {
+		
+		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
+			health -= 2;
+		}
+		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_0)) {
+			health += 2;
+		}		
 		
 		// Animations
 		anim_down.tick();

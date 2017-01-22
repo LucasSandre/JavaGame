@@ -25,7 +25,7 @@ public class Assets {
 	                            brick_batt_up1, brick_batt_up2, brick_batt_up3, brick_batt_up4,
 	                            brick_batt_up5, brick_batt_up6, grass_fade1, grass_fade2, grass_fade3, grass_fade4, 
 	                            grass_fade5, grass_rfade1, grass_rfade2, grass_rfade3, grass_rfade4, 
-	                            grass_rfade5, edge, missing;
+	                            grass_rfade5, edge, missing, bar_holder, bar_overlay;
 	
 	// Initializes public static Buffered Image Arrays for animations and reactivity. 
 	public static BufferedImage[] player_down, player_right_down, player_left_down, player_up,
@@ -36,7 +36,7 @@ public class Assets {
 	
 	public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
 	public static BufferedImage[] arrow, rainbow_proj;
-	public static BufferedImage[] start, heart, energy, mana_fire;
+	public static BufferedImage[] start, heart, energy, mana_fire, health_bar, mana_bar;
 	
 	
 	// Initializes public static Font arrays
@@ -57,6 +57,8 @@ public class Assets {
 	 * @see {@link dev.lucas.game.gfx.SpriteSheet SpriteSheet} , {@link dev.lucas.game.ImageLoader ImageLoader} , {@link dev.lucas.game.FontLoader FontLoader}
 	 * **/
 	public static void init(Graphics g) {	
+		int factor = 0; // for importing the bars
+		
 		// Get Sheet files
 		
 		SpriteSheet entity_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/EntitySheet.png"));
@@ -123,6 +125,9 @@ public class Assets {
 		arrow = new BufferedImage[3];
 		rainbow_proj = new BufferedImage[7];
 		
+		health_bar = new BufferedImage[51];
+		mana_bar = new BufferedImage[51];
+		
 		// For loops for animations
 		
 		for(int i = 0; i < 4; i++) {
@@ -164,6 +169,18 @@ public class Assets {
 		for (int i = 0; i < 6; i++) {
 			mana_fire[i] = ui_sheet.crop(width*i*2, height, width*2, height*2);
 		}
+		factor = 98;
+		for (int i = 0; i < mana_bar.length; i++) {
+			if (i == 0) {
+				mana_bar[i]   = ui_sheet.crop(0, height*6, 1, 1);
+				health_bar[i] = ui_sheet.crop(0, height*7, 1, 1);
+				continue;
+			}
+			mana_bar[i]   = ui_sheet.crop(0, height*6, 100-factor, height);
+			health_bar[i] = ui_sheet.crop(0, height*7, 100-factor, height);
+			factor -= 2;
+		}
+		factor = 0;
 		
 		start[0]        = ui_sheet.crop(0,0,width*2,height);  
 		start[1]        = ui_sheet.crop(width*2,0,width*2,height);
@@ -172,7 +189,8 @@ public class Assets {
 		energy[0]		= ui_sheet.crop(width*4, height*3, width*2, height*2);
 		energy[1]		= ui_sheet.crop(width*6, height*3, width*2, height*2);
 		
-		
+		bar_holder		= ui_sheet.crop(0, height*5, width+100, height);
+		bar_overlay 	= ui_sheet.crop(width+100, height*5, width+100, height);
 		
 		// Tiles 
 		stone        = tile_sheet.crop(0, 0, width, height);
