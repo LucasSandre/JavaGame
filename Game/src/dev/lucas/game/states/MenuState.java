@@ -46,6 +46,9 @@ public class MenuState extends State {
 	 * **/
 	@Override
 	public void tick() {
+		if (!(handler.getMouseManager().getUi_manager().equals(ui_manager))) {
+			handler.getMouseManager().setUIManager(ui_manager);
+		}
 		ui_manager.tick(); // ticks the Uimanager
 		
 		// Temporarily skip start button

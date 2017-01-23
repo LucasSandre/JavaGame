@@ -58,8 +58,6 @@ public class Arrow extends Projectile {
 		bounds.y = (int)(height*0.2);
 		bounds.width = (int)(width/1.4);
 		bounds.height = (int)(height/2.0);
-		System.out.println(bounds.x + "   " + bounds.y);
-		System.out.println(bounds.width + "   " + bounds.height);
 		dmg = 2;
 		delta_x = (x2+ handler.getGameCamera().getX_offset())-x1;
 		delta_y = (y2+ handler.getGameCamera().getY_offset())-y1;

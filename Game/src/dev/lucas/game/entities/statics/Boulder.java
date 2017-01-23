@@ -34,9 +34,9 @@ public class Boulder extends StaticEntity {
 	public Boulder(Handler handler, float x, float y) {
 		super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT);
 		bounds.x = 0;
-		bounds.y = (int) (height / 1.02f);
+		bounds.y = (int) (height / 2.5f);
 		bounds.width = width;
-		bounds.height = (int) (height - height/1.02f);
+		bounds.height = (int) (height - height/2.5f);
 	}
 
 	

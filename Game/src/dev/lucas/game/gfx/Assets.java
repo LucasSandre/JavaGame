@@ -36,16 +36,18 @@ public class Assets {
 	
 	public static BufferedImage[] zombie_down, zombie_up, zombie_left, zombie_right;
 	public static BufferedImage[] arrow, rainbow_proj;
-	public static BufferedImage[] start, heart, energy, mana_fire, health_bar, mana_bar;
+	public static BufferedImage[] start, heart, energy, mana_fire, red_fire, orange_fire, green_fire, health_bar, mana_bar;
 	
 	
 	// Initializes public static Font arrays
 	public static Font[] font_10, font_11, font_12, font_14,
-	                   font_18, font_24, font_30, font_32;
+	                   font_18, font_24, font_30, font_32, 
+	                   font_48, font_60, font_72;
 
 	// Initializes public static font metric arrays
-	public static FontMetrics[] font_10_fm = new FontMetrics[3], font_11_fm, font_12_fm, font_14_fm,
-	                            font_18_fm, font_24_fm, font_30_fm, font_32_fm;
+	public static FontMetrics[] font_10_fm , font_11_fm, font_12_fm, font_14_fm,
+	                            font_18_fm, font_24_fm, font_30_fm, font_32_fm,
+	                            font_48_fm, font_60_fm, font_72_fm;
 	
 	
 	/**
@@ -79,6 +81,9 @@ public class Assets {
 		font_24 = FontLoader.loadFont("/fonts/rune.ttf",24);
 		font_30 = FontLoader.loadFont("/fonts/rune.ttf",30);
 		font_32 = FontLoader.loadFont("/fonts/rune.ttf",32);
+		font_48 = FontLoader.loadFont("/fonts/rune.ttf",48);
+		font_60 = FontLoader.loadFont("/fonts/rune.ttf",60);
+		font_72 = FontLoader.loadFont("/fonts/rune.ttf",72);
 		
 		// Getting Font Metrics		
 		font_10_fm = FontLoader.loadFontMetrics(g, font_10);
@@ -89,6 +94,9 @@ public class Assets {
 		font_24_fm = FontLoader.loadFontMetrics(g, font_24);
 		font_30_fm = FontLoader.loadFontMetrics(g, font_30);
 		font_32_fm = FontLoader.loadFontMetrics(g, font_32);
+		font_48_fm = FontLoader.loadFontMetrics(g, font_48);
+		font_60_fm = FontLoader.loadFontMetrics(g, font_60);
+		font_72_fm = FontLoader.loadFontMetrics(g, font_72);
 		
 		// Creates the arrays for animations and allocates the size of each array to the amount of frams in the animmation.
 		player_right = new BufferedImage[6];
@@ -116,6 +124,9 @@ public class Assets {
 		heart = new BufferedImage[2];
 		energy = new BufferedImage[2];
 		mana_fire = new BufferedImage[6];
+		red_fire = new BufferedImage[6];
+		orange_fire = new BufferedImage[6];
+		green_fire = new BufferedImage[6];
 		
 		zombie_down = new BufferedImage[3];
 		zombie_left = new BufferedImage[3];
@@ -168,6 +179,9 @@ public class Assets {
 		
 		for (int i = 0; i < 6; i++) {
 			mana_fire[i] = ui_sheet.crop(width*i*2, height, width*2, height*2);
+			red_fire[i]  = ui_sheet.crop(width*2*i, height*8, width*2, height*2);
+			orange_fire[i]  = ui_sheet.crop(width*2*i, height*10, width*2, height*2);
+			green_fire[i]  = ui_sheet.crop(width*2*i, height*12, width*2, height*2);
 		}
 		factor = 98;
 		for (int i = 0; i < mana_bar.length; i++) {

@@ -61,9 +61,9 @@ public class UIStatusHeart extends UIObject {
 	public void tick() {
 		player_health = handler.getWorld().getEntity_manager().getPlayer().getHealth();
 		if (health_condition1 == 0 || health_condition2 == 0 || health_condition3 == 0) {
-			health_condition1 = (handler.getWorld().getEntity_manager().getPlayer().MAX_HEALTH/2);
-			health_condition2 = (handler.getWorld().getEntity_manager().getPlayer().MAX_HEALTH/4);
-			health_condition3 = (handler.getWorld().getEntity_manager().getPlayer().MAX_HEALTH/10);
+			health_condition1 = (handler.getWorld().getEntity_manager().getPlayer().getMaxHealth()/2);
+			health_condition2 = (handler.getWorld().getEntity_manager().getPlayer().getMaxHealth()/4);
+			health_condition3 = (handler.getWorld().getEntity_manager().getPlayer().getMaxHealth()/10);
 		}
 		if (player_health <= health_condition1 && player_health > health_condition2) {
 			anim_near_death.setSpeed(500);

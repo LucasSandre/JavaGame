@@ -55,11 +55,14 @@ public class Player extends Creature {
 	// Attack Timer
 	private long last_attack_timer, attack_cooldown = 800, attack_timer = attack_cooldown;
 	
+	// Energy regen timer
+	private long last_energy_timer, energy_regen_speed = 250, energy_timer = 0;
+	
 	// Inventory
 	private Inventory inventory;
 	
 	// for health/energy access
-	public final int MAX_HEALTH = 100;
+	private final int MAX_HEALTH = 100;
 	public final int MAX_ENERGY = 100;
 	
 	// For the players Energy/Mana
@@ -83,11 +86,12 @@ public class Player extends Creature {
 	 * **/
 	public Player(Handler handler,float x, float y) {
 		super(handler,x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+		max_health = MAX_HEALTH;
 		health = MAX_HEALTH;
-		bounds.x = 16;
-		bounds.y = 24;
-		bounds.width = 28;
-		bounds.height = 38;
+		bounds.x = (int) (width/4);
+		bounds.y = (int) (height/2.666f);
+		bounds.width = (int) (width - (width/2f));
+		bounds.height = (int) (height - (height/2.25));
 		
 		// Animations
 		
@@ -111,11 +115,10 @@ public class Player extends Creature {
 		
 		// Sets the name of the entity
 		name = new String("PLAYER");
+		type = new String("ENTITY");
 		
 		// Creates the players inventory
 		inventory = new Inventory(handler);
-	
-		
 	}
 
 	/** 
@@ -128,13 +131,17 @@ public class Player extends Creature {
 	 * **/
 	@Override
 	public void tick() {
-		
+		if (health < 1) {
+			die();
+		}
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
 			health -= 2;
+			energy -= 2;
 		}
 		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_0)) {
 			health += 2;
-		}		
+			energy += 2;
+		}
 		
 		// Animations
 		anim_down.tick();
@@ -206,6 +213,10 @@ public class Player extends Creature {
 			}
 		}
 		
+		// Regen Health and Energy
+		healthRegen();
+		energyRegen();
+		
 		//Movement	
 		
 		getInput();
@@ -255,10 +266,11 @@ public class Player extends Creature {
 	 * @see {@link dev.lucas.game.Handler Handler} , {@link dev.lucas.game.input.MouseManager MouseManager} , {@link dev.lucas.game.gfx.GameCamera GameCamera} , {@link dev.lucas.game.entities.EntityManager EntityManager}
 	 * **/
 	private void checkAttacks() {
+		int px = (int) x + bounds.x - Assets.arrow[0].getWidth(), py = (int) y + bounds.y - Assets.arrow[0].getHeight();	
 		// Increases the attack timer and checks if the cooldown has worn down.
 		attack_timer += System.currentTimeMillis() - last_attack_timer;
 		last_attack_timer = System.currentTimeMillis();
-		if (attack_timer < attack_cooldown) {
+		if (attack_timer < attack_cooldown || energy < 10) {
 			return;
 		}
 		// gets the collision bounds of the player.
@@ -278,18 +290,22 @@ public class Player extends Creature {
 				// Animation trigger code for Top Right
 				attacking = true;
 				att_right_up = true;
+				px = (int) (px + bounds.width);
 			}
 			else if (handler.getMouseManager().getMouseX()  > (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
 					handler.getMouseManager().getMouseY()  >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset())) {
 				// Animation trigger code for Bottom Right
 				attacking = true;
 				att_right_down = true;
+				px = (int) (px + bounds.width);
+				py = (int) (py + bounds.height);
 			}
 			else if (handler.getMouseManager().getMouseX()  < (int)(cb.x - handler.getGameCamera().getX_offset()) &&
 					 handler.getMouseManager().getMouseY()  >= (int)(cb.y + cb.height - handler.getGameCamera().getY_offset())) {
 				// Animation trigger code for Bottom Left
 				attacking = true;
 				att_left_down = true;
+				py = (int) (py + bounds.height);
 			}
 			else if (handler.getMouseManager().getMouseX() >= (cb.x - handler.getGameCamera().getX_offset()) &&
 					 handler.getMouseManager().getMouseX() <= (int)(cb.x + cb.width- handler.getGameCamera().getX_offset()) &&
@@ -297,6 +313,7 @@ public class Player extends Creature {
 				// Animation trigger code for Up
 				attacking = true;
 				att_up = true;
+				px = (int) (px + bounds.width/2);
 			}
 			else if (handler.getMouseManager().getMouseX() >= (int)(cb.x - handler.getGameCamera().getX_offset()) &&
 					 handler.getMouseManager().getMouseX() <= (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
@@ -304,6 +321,8 @@ public class Player extends Creature {
 				// Animation trigger code for Down
 				attacking = true;
 				att_down = true;
+				px = (int) (px + bounds.width/2);
+				py = (int) (py + bounds.height);
 			}
 			else if (handler.getMouseManager().getMouseX() <= (int)(cb.x - handler.getGameCamera().getX_offset()) &&
 					 handler.getMouseManager().getMouseY() >= (int)(cb.y - handler.getGameCamera().getY_offset()) &&
@@ -311,6 +330,7 @@ public class Player extends Creature {
 				// Animation trigger code for Left
 				attacking = true;
 				att_left = true;
+				py = (int) (py + bounds.height/2);
 			}
 			else if (handler.getMouseManager().getMouseX() >= (int)(cb.x + cb.width - handler.getGameCamera().getX_offset()) &&
 					 handler.getMouseManager().getMouseY() >= (int)(cb.y - handler.getGameCamera().getY_offset()) &&
@@ -318,12 +338,20 @@ public class Player extends Creature {
 				// Animation trigger code for Right
 				attacking = true;
 				att_right = true;
+				px = (int) (px + bounds.width);
+				py = (int) (py + bounds.height/2);
 			}
 			else {
 				return;
 			}
-			// Adds the projectile to the world and resets the attack timer.
-			handler.getWorld().getEntity_manager().addProjectile(new Arrow(handler, x, y, handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), name));
+			// Adds the projectile to the world and resets the attack timer and diminishes the players energy.
+			handler.getWorld().getEntity_manager().addEntityWaitlist(new Arrow(handler, px, py, handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), name));
+			if (energy < 10) {
+				energy = 0;
+			}
+			else {
+				energy -= 10;
+			}
 			attack_timer = 0;
 		}
 		
@@ -562,7 +590,7 @@ public class Player extends Creature {
 		int y_offset = rand.nextInt(height);
 		return y + y_offset;
 	}
-
+	
 	/** 
 	 * <i><b>Die</b></i>
 	 * <pre>	public void die()</pre>
@@ -572,10 +600,10 @@ public class Player extends Creature {
 	 * **/
 	@Override
 	public void die() {
-		active = false;
+		handler.getGame().stop();
 		
 	}
-	
+		
 	// Getters and Setters
 	/** 
 	 * <i><b>GetInventory</b></i>
@@ -674,9 +702,27 @@ public class Player extends Creature {
 		else if (att_left_down) {
 			return attack_anim_left_down.getCurrentFrame();
 		}
-		return Assets.player_still[player_i];
-		
-		
+		return Assets.player_still[player_i];	
 	}
 
+	/**
+	 * <i><b>energyRegen</b></i>
+	 * <pre>	public void energyRegen()</pre>
+	 * <p>This method checks to see if the player can regen some energy.</p>
+	 * @param None
+	 * @return void
+	 * **/
+	private void energyRegen() {
+		energy_timer += System.currentTimeMillis() - last_energy_timer;
+		last_energy_timer = System.currentTimeMillis();
+		if (energy_timer < energy_regen_speed) {
+			return;
+		}
+		
+		if (energy < MAX_ENERGY) {
+			energy += 1;
+		}
+		energy_timer = 0;
+	}
+	
 }

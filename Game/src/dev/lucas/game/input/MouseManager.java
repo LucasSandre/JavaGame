@@ -215,4 +215,18 @@ public class MouseManager implements MouseListener,  MouseMotionListener{
 	public void setUIManager(UIManager ui_manager){
 		this.ui_manager = ui_manager;
 	}
+
+	/**
+	 * <i><b>getUi_manager</b></i>
+	 * <pre>	public UIManager getUi_manager()</pre>
+	 * <p>Gets the UiManager that is currently set.</p>
+	 * @param None
+	 * @return UIManager
+	 * @see {@link dev.lucas.game.ui.UIManager UIManager}
+	 * **/
+	public UIManager getUi_manager() {
+		return ui_manager;
+	}
+	
+	
 }

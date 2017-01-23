@@ -1,5 +1,6 @@
 package dev.lucas.game.worlds;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -11,13 +12,18 @@ import dev.lucas.game.entities.EntityManager;
 import dev.lucas.game.entities.creatures.Player;
 import dev.lucas.game.entities.statics.Boulder;
 import dev.lucas.game.entities.statics.Tree;
+import dev.lucas.game.gfx.Assets;
 import dev.lucas.game.items.ItemManager;
 import dev.lucas.game.tiles.Tile;
+import dev.lucas.game.ui.ClickListener;
 import dev.lucas.game.ui.UIManager;
 import dev.lucas.game.ui.UIPlayerEnergyStatusBar;
 import dev.lucas.game.ui.UIPlayerHealthStatusBar;
 import dev.lucas.game.ui.UIStatusEnergy;
+import dev.lucas.game.ui.UIStatusEnergyText;
+import dev.lucas.game.ui.UIStatusHealthText;
 import dev.lucas.game.ui.UIStatusHeart;
+import dev.lucas.game.ui.UIText;
 import dev.lucas.game.utils.Utils;
 
 /** 
@@ -79,8 +85,12 @@ public class World {
 		// creates player specific UI Objects
 		ui_manager.addObject(new UIStatusHeart(handler, 0, 0, 64, 64));
 		ui_manager.addObject(new UIPlayerHealthStatusBar(handler, 64, 0, 264, 64));
+		ui_manager.addObject(new UIStatusHealthText(handler, 336, 16 + Assets.font_32_fm[0].getAscent()));
+		
 		ui_manager.addObject(new UIStatusEnergy(handler, 0, 64, 64, 64));
 		ui_manager.addObject(new UIPlayerEnergyStatusBar(handler, 64, 64, 264, 64));
+		ui_manager.addObject(new UIStatusEnergyText(handler, 336, 80 + Assets.font_32_fm[0].getAscent()));
+		
 	}
 	
 	/**

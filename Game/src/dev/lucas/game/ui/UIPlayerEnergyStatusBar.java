@@ -45,7 +45,13 @@ public class UIPlayerEnergyStatusBar extends UIObject{
 	@Override
 	public void tick() {
 		player_energy = handler.getWorld().getEntity_manager().getPlayer().energy;
-		bar_index = (int) Math.round(Assets.mana_bar.length * ((float) (player_energy)/(float)(handler.getWorld().getEntity_manager().getPlayer().MAX_ENERGY)))-1;	
+		bar_index = (int) Math.ceil(Assets.mana_bar.length * ((float) (player_energy)/(float)(handler.getWorld().getEntity_manager().getPlayer().MAX_ENERGY)))-1;	
+		if (bar_index < 0) {
+			bar_index = 0;
+		}
+		if (bar_index > Assets.mana_bar.length-1) {
+			bar_index = Assets.mana_bar.length-1;
+		}
 	}
 
 	/**

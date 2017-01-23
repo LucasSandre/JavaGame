@@ -20,7 +20,7 @@ public class EntityManager {
 	private Handler handler;
 	private Player player;
 	private ArrayList<Entity> entities;
-	private ArrayList<Entity> projectiles;
+	private ArrayList<Entity> waitlist;
 	
 	// Creates a comparator to render entities in the correct order.
 	private Comparator<Entity> render_sorter = new Comparator<Entity>() {
@@ -54,45 +54,43 @@ public class EntityManager {
 		this.handler = handler;
 		this.player = player;
 		entities = new ArrayList<Entity>();
-		projectiles = new ArrayList<Entity>();
+		waitlist = new ArrayList<Entity>();
 		addEntity(player);
 		
 	}
 	
-	// Updates all the the entities in the world, checks if the entity is still 'active', and if not it removes it. then it resorts the ArrayList. the same for Projectiles.
+	// Updates all the the entities in the world, checks if the entity is still 'active', and if not it removes it. then it resorts the ArrayList.
 	/** 
 	 * <i><b>Tick</b></i>
 	 * <pre>	public void tick()</pre>
-	 * <p>This method updates all Entities and Projectiles in the world, checks if the Entity or Projectile is still 'active' and if not it removes it. After it resorts the ArrayLists.</p>
+	 * <p>This method updates all Entities and in the world, checks if the Entity or Projectile is still 'active' and if not it removes it. After it resorts the ArrayLists.</p>
 	 * @param None
 	 * @return None
 	 * @see {@link dev.lucas.game.entities Entity} , {@link dev.lucas.gamme.entities.projectile.Projectile Projectile}
 	 * **/
 	public void tick() {
-		Iterator<Entity> ite = entities.iterator();
-		while(ite.hasNext()) {
-			Entity e = ite.next();
+		ArrayList<Entity> entities_clone = (ArrayList<Entity>) entities.clone();
+		Iterator<Entity> it = entities_clone.iterator();
+		while(it.hasNext()) {
+			Entity e = it.next();
 			e.tick();
 			if (!e.isActive()){
-				ite.remove();
+				it.remove();
 			}
 		}
+		entities = (ArrayList<Entity>) entities_clone.clone();
+		Iterator<Entity> add_it = waitlist.iterator();
+		while (add_it.hasNext()) {
+			entities.add(add_it.next());
+		}
+		waitlist.clear();
 		entities.sort(render_sorter);
-		Iterator<Entity> itp = projectiles.iterator();
-		while (itp.hasNext()) {
-			Entity p = itp.next();
-			p.tick();
-			if (!p.isActive()) {
-				itp.remove();
-			}
-		}
-		projectiles.sort(render_sorter);
 	}
 
 	/** 
 	 * <i><b>Render</b></i>
 	 * <pre>	public void render(Graphics g)</pre>
-	 * <p>This method renders all Entities and Projectiles.</p>
+	 * <p>This method renders all Entities.</p>
 	 * @param
 	 * @return None
 	 * @see {@link dev.lucas.game.entities Entity} , {@link dev.lucas.gamme.entities.projectile.Projectile Projectile}
@@ -100,9 +98,6 @@ public class EntityManager {
 	public void render(Graphics g) {
 		for (Entity e : entities){
 			e.render(g);
-		}
-		for (Entity p : projectiles) {
-			p.render(g);
 		}
 	}
 
@@ -119,16 +114,8 @@ public class EntityManager {
 		entities.add(e);
 	}
 	
-	/** 
-	 * <i><b>AddProjectile</b></i>
-	 * <pre>	public void addProjectile(Entity p)</pre>
-	 * <p>An adder method for the 'projectiles' ArrayList.</p>
-	 * @param
-	 * @return None
-	 * @see {@link dev.lucas.gamme.entities.projectile.Projectile Projectile}
-	 * **/
-	public void addProjectile(Entity p) {
-		projectiles.add(p);
+	public void addEntityWaitlist(Entity e) {
+		waitlist.add(e);
 	}
 	
 	// Getters and Setters
@@ -203,29 +190,5 @@ public class EntityManager {
 	 * **/
 	public void setEntities(ArrayList<Entity> entities) {
 		this.entities = entities;
-	}
-
-	/** 
-	 * <i><b>GetProjectiles</b></i>
-	 * <pre>	public ArrayList(Entity) getProjectiles()</pre>
-	 * <p>Gets the Projectiles ArrayList.</p>
-	 * @param None
-	 * @return ArrayList(Entity)
-	 * @see {@link dev.lucas.game.entities.projectiles.Projectile Projectile}
-	 * **/
-	public ArrayList<Entity> getProjectiles() {
-		return projectiles;
-	}
-
-	/** 
-	 * <i><b>SetProjectiles</b></i>
-	 * <pre>	public void eetProjectiles(ArrayList(Entity) projectiles)</pre>
-	 * <p>Sets the Projectiles ArrayList.</p>
-	 * @param 
-	 * @return None
-	 * @see {@link dev.lucas.game.entities.projectiles.Projectile Projectile}
-	 * **/
-	public void setProjectiles(ArrayList<Entity> projectiles) {
-		this.projectiles = projectiles;
 	}
 }

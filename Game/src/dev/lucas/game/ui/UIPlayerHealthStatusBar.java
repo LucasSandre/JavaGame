@@ -49,7 +49,13 @@ public class UIPlayerHealthStatusBar extends UIObject {
 	@Override
 	public void tick() {
 		player_health = handler.getWorld().getEntity_manager().getPlayer().getHealth();
-		bar_index = (int) Math.round((Assets.health_bar.length * ((float)(player_health)/(float)(handler.getWorld().getEntity_manager().getPlayer().MAX_HEALTH)))) - 1;		
+		bar_index = (int) Math.ceil((Assets.health_bar.length * ((float)(player_health)/(float)(handler.getWorld().getEntity_manager().getPlayer().getMaxHealth())))) - 1;		
+		if (bar_index < 0) {
+			bar_index = 0;
+		}
+		if (bar_index > Assets.health_bar.length-1) {
+			bar_index = Assets.health_bar.length-1;
+		}
 	}
 
 	/**

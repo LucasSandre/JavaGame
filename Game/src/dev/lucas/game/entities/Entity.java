@@ -19,11 +19,14 @@ public abstract class Entity {
 	protected Handler handler;
 	protected float x,y;
 	protected int width,height;
-	protected int health;
+	protected int health, max_health;
 	protected boolean active = true;
 	protected Rectangle bounds;
 	protected int dmg;
-	protected String sender, name;
+	protected String name, type;
+	
+	// for entity health regen
+	protected long last_health_timer, health_regen_speed = 650, health_timer = 0;
 		
 	/** 
 	 * <i><b>Entity</b></i>
@@ -98,6 +101,23 @@ public abstract class Entity {
 		}
 	}
 	
+	public void healthRegen() {
+		health_timer += System.currentTimeMillis() - last_health_timer;
+		last_health_timer = System.currentTimeMillis();
+		if (health_timer < health_regen_speed) {
+			return;
+		}
+		if (health < max_health) {
+			if ((max_health - health) < 10) {
+				health = max_health;
+			}
+			else {
+				health += 2;
+			}
+		}
+		health_timer = 0;
+	}
+	
 	/** 
 	 * <i><b>CheckEntityCollisions</b></i>
 	 * <pre>	public boolean checkEntityCollisions(float x_offset,
@@ -119,35 +139,7 @@ public abstract class Entity {
 		}
 		return false;
 	}
-	/** 
-	 * <i><b>CheckEntityProjectielCollisions</b><i>
-	 * <pre>	public boolean checkEntityProjectileCollisions(float x_offset,
-	 *                                                       float y_offset)</pre>
-	 * <p>This method checks over every Projectile and Entity and sees if any collide. If a Projectile collides with an Entity it damages the Entity, and kills the Projectile.</p>
-	 * @param
-	 * @return Boolean
-	 * @see {@link dev.luacs.game.entities.projectiles.Projectile Projectile}
-	 * **/
-	public boolean checkEntityProjectileCollisions(float x_offset, float y_offset) {
-		// Checks if any entity collides  with a projectile. If so it kills the projectile and hurts the entity. 
-		for (Entity p: handler.getWorld().getEntity_manager().getProjectiles()) {
-			if (p.equals(this)) {
-				continue;
-			}
-			for (Entity e : handler.getWorld().getEntity_manager().getEntities()) {
-				if (e.getCollisionBounds(0f, 0f).intersects(p.getCollisionBounds(x_offset, y_offset))) {
-					if (p.sender.equals(e.name)) {
-						continue;
-					}
-					e.hurt(p.getDmg());
-					p.die();
-					return true;
-				}
-			}
-		}		
-		return false;
-	}
-	
+
 	// methods for random drop placement for 
 	/**
 	 * <i><b>itemDropX</b></i>
@@ -298,6 +290,17 @@ public abstract class Entity {
 		this.health = health;
 	}
 
+	/**
+	 * <i><b>getMaxHealth</b></i>
+	 * <pre>	public int getMaxHealth()</pre>
+	 * <p>Gets the entities max health.</p>
+	 * @param None
+	 * @return int
+	 * **/
+	public int getMaxHealth() {
+		return max_health;
+	}
+
 	/** 
 	 * <i><b>IsActive</b></i>
 	 * <pre>	public boolean isActive()</pre>
@@ -341,6 +344,30 @@ public abstract class Entity {
 	 * **/
 	public void setDmg(int dmg) {
 		this.dmg = dmg;
+	}
+
+	/**
+	 * <i><b>getName</b></i>
+	 * <pre>	public String getName()</pre>
+	 * <p>Gets the entities name.</p>
+	 * @param None
+	 * @return String
+	 * @see {@link dev.lucas.game.entities }
+	 * **/
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <i><b>getType</b></i>
+	 * <pre>	public String getType()</pre>
+	 * <p>Gets the entities type.</p>
+	 * @param None
+	 * @return String
+	 * @see {@link dev.lucas.game.entities }
+	 * **/
+	public String getType() {
+		return type;
 	}
 
 	

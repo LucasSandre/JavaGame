@@ -11,7 +11,7 @@ import dev.lucas.game.tiles.Tile;
 public abstract class Creature extends Entity {
 
 	// Sets some final values necessary for momentum and size.
-	public static final float MAX_SPEED = 200f;
+	public static final float MAX_SPEED = 7.5f;
 	public static final float SPEED_CHANGE = 0.2f;
 	public static final int DEFAULT_CREATURE_WIDTH = 64,
 							DEFAULT_CREATURE_HEIGHT = 64;

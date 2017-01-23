@@ -2,6 +2,7 @@ package dev.lucas.game;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 
 import dev.lucas.game.display.Display;
@@ -11,6 +12,7 @@ import dev.lucas.game.input.KeyManager;
 import dev.lucas.game.input.MouseManager;
 import dev.lucas.game.states.GameState;
 import dev.lucas.game.states.MenuState;
+import dev.lucas.game.states.StartState;
 import dev.lucas.game.states.State;
 
 /** 
@@ -33,10 +35,10 @@ import dev.lucas.game.states.State;
  *  @author Lucas Sandre	- The Dev & Co-Artist
  *  @author Ethan Coad 		- The Co-Dev & Co-Artist
  *  @author Marcus Blauner	- The Artist
- *  @version Beta 1.0
+ *  @version Alpha 0.01
  *  @see {@link dev.lucas.game.Launcher Launcher}
  * **/
-public class Game implements Runnable{
+public class Game implements Runnable {
 	
 	// Initializes game variables
 	private Display display;
@@ -53,7 +55,7 @@ public class Game implements Runnable{
 	// Initializing States
 	public State game_state;
 	public State menu_state;
-	public State setting_state;
+	public State start_state;
 	
 	// Initializing Input
 	private KeyManager key_manager;
@@ -120,10 +122,12 @@ public class Game implements Runnable{
 		// creates the states for the game.
 	    game_state = new GameState(handler);
 	    menu_state = new MenuState(handler);
+	    start_state = new StartState(handler);
+	    
 
 	    
-	    // sets the current state to the menu state
-		State.setState(menu_state);
+	    // sets the current state to the start state
+		State.setState(start_state);
 	}
 	/** 
 	 * <i><b>Tick</b></i>
@@ -141,7 +145,6 @@ public class Game implements Runnable{
 		if (key_manager.keyJustPressed(KeyEvent.VK_SHIFT)) {
 			debug = !debug;
 		}
-		
 		if (State.getState() != null) 
 			State.getState().tick();
 	}
@@ -222,7 +225,6 @@ public class Game implements Runnable{
 		     	ticks = 0;
 				timer = 0;
 			}
-			
 		}
 	}
 	
@@ -259,13 +261,9 @@ public class Game implements Runnable{
 			return;
 		}
 		
-		// Attempts to end the game tread, If it fails it catches the IntertuptedExeption and prints its stack trace.
-		try {
-			thread.join();
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		// ends the game
+		display.getFrame().dispose();
+		System.exit(0);
 		
 	}
 	

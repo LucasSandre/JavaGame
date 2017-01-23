@@ -1,6 +1,8 @@
 package dev.lucas.game.display;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 

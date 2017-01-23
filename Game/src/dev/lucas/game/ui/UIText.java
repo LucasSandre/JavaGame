@@ -88,5 +88,4 @@ public class UIText extends UIObject{
 		// When called runs the clickers onClick() method
 		clicker.onClick();
 	}
-
 }

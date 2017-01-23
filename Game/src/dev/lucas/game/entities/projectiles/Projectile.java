@@ -21,6 +21,8 @@ public abstract class Projectile extends Entity {
 	protected float proj_xMove, proj_yMove;
 	protected double direction;
 	
+	public String sender;
+	
 	// The Class Constructor
 	/**
 	 * <i><b> Projectile</b></i>
@@ -45,7 +47,34 @@ public abstract class Projectile extends Entity {
 		proj_yMove = 0;
 		this.direction = 0;
 	}
-
+	
+	/**
+	 * <i><b>checkEntityCollisions</b></i>
+	 * <pre>	public boolean checkEntityCollisions()</pre>
+	 * <p>This method overrides the one in the Entitiy class to work with projectiles.</p>
+	 * @param
+	 * @return boolean
+	 * @see {@link dev.lucas.game.entities.Entity Entity}
+	 * **/
+	@Override
+	public boolean checkEntityCollisions (float x_offset, float y_offset) {
+		// Checks for Entity Collisions by ignoring itself and seeing if bounding boxes collide with another entity
+		for (Entity e : handler.getWorld().getEntity_manager().getEntities()){
+			if (e.equals(this)) {
+				continue;
+			}
+			if (e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(x_offset,y_offset))) {
+				if (e.getName().equals(this.sender)) {
+					continue;
+				}
+				e.hurt(this.getDmg());
+				this.die();
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * <i><b>update</b></i>
 	 * <pre>	public void update()</pre>
@@ -70,10 +99,10 @@ public abstract class Projectile extends Entity {
 		// When Called It checks if it collided with any Entity
 			// If True, damages entity and kills the projectile
 			// Else, continues to move.
-		if (!checkEntityProjectileCollisions(proj_xMove,0f)) {
+		if (!checkEntityCollisions(proj_xMove,0f)) {
 			moveX();
 		}
-		if (!checkEntityProjectileCollisions(0f,proj_yMove)) {
+		if (!checkEntityCollisions(0f,proj_yMove)) {
 			moveY();
 		}
 	}
