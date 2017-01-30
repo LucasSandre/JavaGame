@@ -108,7 +108,7 @@ public abstract class Entity {
 			return;
 		}
 		if (health < max_health) {
-			if ((max_health - health) < 10) {
+			if ((max_health - health) < 2) {
 				health = max_health;
 			}
 			else {

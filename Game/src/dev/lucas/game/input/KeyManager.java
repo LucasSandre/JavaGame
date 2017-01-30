@@ -12,9 +12,11 @@ public class KeyManager implements KeyListener {
 	// Implements KeyListener Methods to detect key input
 	
 	// Initializes boolean variables and Arrays to store if a key is pressed , it was already pressed, and if you can't press it.
+	private char current_input;
 	private boolean[] keys , just_pressed, cant_press;
-	public boolean up,down,right,left;
+	public boolean up,down,right,left,delete;
 	public boolean e_key;
+	public boolean inputing = false;
 	
 	// The Class Constructor
 		// creates the arrays
@@ -63,6 +65,7 @@ public class KeyManager implements KeyListener {
 		down = keys[KeyEvent.VK_S];
 		left = keys[KeyEvent.VK_A];
 		right = keys[KeyEvent.VK_D];	
+		delete = keys[KeyEvent.VK_BACK_SPACE];
 	}
 	
 	/**
@@ -107,8 +110,10 @@ public class KeyManager implements KeyListener {
 	 * **/
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
-		
+		if (!inputing) {
+			return;
+		}
+		current_input = e.getKeyChar();
 	}
 	
 	/**
@@ -126,4 +131,19 @@ public class KeyManager implements KeyListener {
 		}
 		return just_pressed[keyCode];
 		}
+
+
+	/**
+	 * <i><b>getCurrent_input</b></i>
+	 * <pre>	public char getCurrent_input()</pre>
+	 * <p>Gets the current inputed character.</p>
+	 * @param None
+	 * @return char
+	 * @see {@link dev.lucas.game.input }
+	 * **/
+	public char getCurrentInput() {
+		return current_input;
+	}
+	
+	
 }

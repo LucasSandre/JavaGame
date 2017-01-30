@@ -134,15 +134,16 @@ public class Player extends Creature {
 		if (health < 1) {
 			die();
 		}
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
-			health -= 2;
-			energy -= 2;
+		if (handler.getGame().isDebug()) {
+			if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
+				health -= 2;
+				energy -= 2;
+			}
+			if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_0)) {
+				health += 2;
+				energy += 2;
+			}
 		}
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_0)) {
-			health += 2;
-			energy += 2;
-		}
-		
 		// Animations
 		anim_down.tick();
 		anim_up.tick();

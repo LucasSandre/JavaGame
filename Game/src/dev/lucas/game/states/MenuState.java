@@ -2,6 +2,7 @@ package dev.lucas.game.states;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import dev.lucas.game.Handler;
 import dev.lucas.game.gfx.Assets;
@@ -9,6 +10,7 @@ import dev.lucas.game.ui.ClickListener;
 import dev.lucas.game.ui.UIImageButton;
 import dev.lucas.game.ui.UIManager;
 import dev.lucas.game.ui.UIText;
+import dev.lucas.game.ui.UITextBox;
 
 /** 
  * <i><b>MenuState</b></i>
@@ -20,6 +22,8 @@ public class MenuState extends State {
 	
 	// Initializes a private ui_manager object
 	private UIManager ui_manager;
+	private Rectangle outer, char_window;
+	private int overlay_x, overlay_y;
 	
 	// The MenuState constructor and takes in a handler object. pases the handler to the super constructor, creates a Ui manager, sets it in the handler, adds some UI objects that can change the stae
 	/**
@@ -33,6 +37,8 @@ public class MenuState extends State {
 		super(handler);
 		ui_manager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(ui_manager);
+		overlay_x = (handler.getWidth()-Assets.character_select_overlay.getWidth())/2;
+		overlay_y = (handler.getHeight()-Assets.character_select_overlay.getHeight())/2;
 		init();
 	}
 
@@ -51,9 +57,6 @@ public class MenuState extends State {
 		}
 		ui_manager.tick(); // ticks the Uimanager
 		
-		// Temporarily skip start button
-		//handler.getMouseManager().setUIManager(null);
-		//State.setState(handler.getGame().game_state);
 	}
 	
 
@@ -66,27 +69,16 @@ public class MenuState extends State {
 	 * @see {@link dev.lucas.game.ui.UIManager UIManager}
 	 * **/
 	@Override
-	public void render(Graphics g) { // renders the Uimanager.
+	public void render(Graphics g) { // renders the Ui manager.
+		g.setColor(Assets.blue);
+		g.fillRect(0, 0, handler.getWidth(), handler.getHeight());
+		g.setColor(Assets.shadow_blue);
+		g.fillRect((handler.getWidth()-Assets.character_select_overlay.getWidth()-20)/2,  (handler.getHeight()-Assets.character_select_overlay.getHeight()-20)/2, Assets.character_select_overlay.getWidth()+20, Assets.character_select_overlay.getHeight()+20);
+		g.drawImage(Assets.character_select_overlay, overlay_x, overlay_y, null);
 		ui_manager.render(g);
 	}
 	
 	private void init() {
-		ui_manager.addObject(new UIImageButton(200,200,128,64,Assets.start,new ClickListener(){
-
-			@Override
-			public void onClick() {
-				State.setState(handler.getGame().game_state);
-			}
-		}));
-		ui_manager.addObject(new UIText(400,100,128,64,Assets.font_32[0], Color.cyan, "TEST", new ClickListener() {
-
-			
-			// this method gets called when the object is clicked on.
-			@Override
-			public void onClick() {
-				System.out.println("TEST");
-			}
-			
-		}));
+		ui_manager.addObject(new UITextBox(handler, (overlay_x + (1024*(5f/16f))), (overlay_y+(576*(10f/64f))), 400, 48, Assets.font_32[0], Assets.font_32_fm[0], "Enter Character Name"));
 	}
 }

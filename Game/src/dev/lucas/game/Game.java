@@ -121,13 +121,11 @@ public class Game implements Runnable {
 		
 		// creates the states for the game.
 	    game_state = new GameState(handler);
-	    menu_state = new MenuState(handler);
+	    menu_state = new MenuState(handler);	// This state can be reached from the start state, (WORK IN PROGRESS)
 	    start_state = new StartState(handler);
-	    
-
-	    
+	   
 	    // sets the current state to the start state
-		State.setState(start_state);
+		State.setState(game_state); // NOTE TO BURKE TO GET TO THE GAME OR START SCREEN CHANGE THE PASSED STATE TO THE THE VARIABLE NAMES ABOVE.
 	}
 	/** 
 	 * <i><b>Tick</b></i>

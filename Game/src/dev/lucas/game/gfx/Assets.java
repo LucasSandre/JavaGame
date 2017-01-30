@@ -1,4 +1,5 @@
 package dev.lucas.game.gfx;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -25,7 +26,8 @@ public class Assets {
 	                            brick_batt_up1, brick_batt_up2, brick_batt_up3, brick_batt_up4,
 	                            brick_batt_up5, brick_batt_up6, grass_fade1, grass_fade2, grass_fade3, grass_fade4, 
 	                            grass_fade5, grass_rfade1, grass_rfade2, grass_rfade3, grass_rfade4, 
-	                            grass_rfade5, edge, missing, bar_holder, bar_overlay;
+	                            grass_rfade5, edge, missing, bar_holder, bar_overlay, character_select_overlay,
+	                            input_box;
 	
 	// Initializes public static Buffered Image Arrays for animations and reactivity. 
 	public static BufferedImage[] player_down, player_right_down, player_left_down, player_up,
@@ -38,7 +40,6 @@ public class Assets {
 	public static BufferedImage[] arrow, rainbow_proj;
 	public static BufferedImage[] start, heart, energy, mana_fire, red_fire, orange_fire, green_fire, health_bar, mana_bar;
 	
-	
 	// Initializes public static Font arrays
 	public static Font[] font_10, font_11, font_12, font_14,
 	                   font_18, font_24, font_30, font_32, 
@@ -49,6 +50,7 @@ public class Assets {
 	                            font_18_fm, font_24_fm, font_30_fm, font_32_fm,
 	                            font_48_fm, font_60_fm, font_72_fm;
 	
+	public static Color blue, shadow_blue;
 	
 	/**
 	 * <i><b>init</b></i>
@@ -70,6 +72,15 @@ public class Assets {
 		SpriteSheet item_sheet   = new SpriteSheet(ImageLoader.loadImage("/textures/ItemSheet.png"));
 		SpriteSheet attack_sheet = new SpriteSheet(ImageLoader.loadImage("/textures/Attackmap.png"));
 		SpriteSheet proj_sheet   = new SpriteSheet(ImageLoader.loadImage("/textures/ProjectileSheet.png"));
+		
+		// Get Overlays
+		
+		character_select_overlay = ImageLoader.loadImage("/textures/CharacterSelectOverlay.png");
+		
+		
+		// Gets colours
+		blue = new Color(23, 47, 144);
+		shadow_blue = new Color(15, 33, 106);
 		
 		// Get Fonts
 		
@@ -202,6 +213,8 @@ public class Assets {
 		heart[1]		= ui_sheet.crop(width*2, height*3, width*2, height*2);
 		energy[0]		= ui_sheet.crop(width*4, height*3, width*2, height*2);
 		energy[1]		= ui_sheet.crop(width*6, height*3, width*2, height*2);
+		
+		input_box 		= ImageLoader.loadImage("/textures/inputbox.png");
 		
 		bar_holder		= ui_sheet.crop(0, height*5, width+100, height);
 		bar_overlay 	= ui_sheet.crop(width+100, height*5, width+100, height);
