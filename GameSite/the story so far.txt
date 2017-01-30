@@ -1,0 +1,11 @@
+The story.
+The human race was a creation of the gods. These gods gave the human race 3 gifts and one restriction, the gifts were among the best bestowed on the creatures of earth. Innovation, knowledge and curiosity, with this came a terrifying prospect within decades of human creation the gods feared what humans may become in the future therefore the one restriction of the gods was created. This restriction was that no human was allowed to study or harness the magics of the planet lest they become more omnipotent then the gods who created them.
+
+Many humans feared the gods and listened to their warnings whereas others became complacent and could no longer hear the complaints from the gods. When the human race deserted their creators completely the gods therefore loosing strength set upon the earth complete darkness that swallowed the world with that darkness brought creatures from the world before the creation of humans. Wraiths, dragons, hell hounds, and the resurrection of the dead  were only a few of the evils that were created in that darkness. As many died the strong of the race damned the gods trusting in only themselves to purge the darkness from the planet, they made a task force of particularly strong people to purge the planet of its darkness.
+
+Where does the player character fit in this story ?, you were born outside the safety of the city walls in a small down north of the city when the darkness was set upon the planet you were the first to feel the god's wrath seeking revenge for the deaths of your entire village you set of to the city in hopes of helping purge the planet of its darkness.
+
+The game runs on WASD controls for movement and and mouse clicks to shoot
+Currently there isn't an inventory system yet 
+Shift is currently a dev button for testing purposes
+0 and 9 add and subtract health
